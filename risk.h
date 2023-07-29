@@ -32,5 +32,22 @@ public:
 
 };
 
+//Declaracion de las funciones para cargar los datos y realizar opercaiones
+void cargarPaises(std::vector<Pais>& paises);
+void cargarContinentes(std::vector<Continente>& continentes);
+void cargarFronteras(std::map<std::string, std::vector<std::string >>& fronteras);
+void asignarObjetivosAleatorios(std::vector<Jugador>& jugadores);
+void asignarObjetivosPorPaises(std::vector<Jugador>& jugadores);
+void asignarObjetivosPorContinete(std::vector<Jugador>& jugadores);
+void asignarObjetivosPorJugador(Jugador& jugador);
+void mostrarObjetivos(const std::vector<Jugador>& jugadores);
+void mostrarObjetivosJugador(const Jugador& jugador);
+void mostrarPaises(const std::vector<Pais>& paises);
+void mostrarContinente(const std::vector<Continente>& continentes);
+void mostrarFronteras(const std::map<std::string , std::vector<std::string>>& fronteras);
+void mostrarConquista(const std::string& nombreTerritorio);
+
+//Declararion de la funcion de ayuda
+void mostrarAyuda();
 
 #endif //risk.h
