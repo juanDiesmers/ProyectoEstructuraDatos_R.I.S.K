@@ -1,0 +1,10 @@
+Los comandos que puede digitar son los siguientes:
+
+inicializar -> Iniciar el juego 
+turno (id de jugador) -> El jugador toma opciones con su turno 
+s o salir -> Salir del juego
+guardar (nombre de archivo) -> Se guarda el juego con el nombre de su eleccion en un txt
+guardar_comprimido (nombre de archivo) -> Se guarda el juego con el nombre de su elección en archivo binario
+inicializar (nombre de archivo) -> Permite iniciar el juego con los datos guardados en un archivo
+costo_conquista (nombre de territorio) -> Muestra el costo de la conquista del territorio nombrado
+conquista_mas_barata -> Dice el territorio que puede ser conquistado con el menor numero de costo_conquista
