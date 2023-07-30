@@ -47,7 +47,7 @@ int main(){
                     } else if (comando == "asignnar_objetivos_segun_pais" || comando == "aosp"){
                         asignarObjetivosPorPaises(jugadores);
                     } else if (comando == "asignar_objeivos_segun_continente" || comando == "aosc" ){
-                        asignarObjetivosPorContinete(jugadores);
+                        asignarObjetivosPorContinente(jugadores);
                     } else if (comando == "atacar_pais" || comando == "ap"){
 
                     }
