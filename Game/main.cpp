@@ -8,7 +8,7 @@ int main(){
     vector<Territorio> territorios;
 
     bool juego_inicializado = false;
-    bool juego_terminado = true;
+    bool juego_terminado = false;
     int turno_actual = 0;
 
     string comando;
@@ -35,7 +35,7 @@ int main(){
                 salir();
             }
             break;
-        case 'h':
+        case 'a':
             if(comando == "ayuda" || comando == "a"){
                 mostrarAyuda();
             }

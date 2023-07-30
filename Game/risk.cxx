@@ -1,6 +1,6 @@
 #include "risk.h"
 #include <iostream>
-
+#include <fstream>
 using namespace std;
 //Implementacion de la funcion para cargar los datos y relizar operaciones
 
@@ -18,6 +18,7 @@ bool turnoJugador(std::vector<Jugador>& jugadores, std::vector<Territorio>& terr
 
 void salir() {
     std::cout << "Saliendo..." << std::endl;
+    exit;
 }
 
 // Funciones para el componente 2: Almacenamento de partidas
@@ -47,8 +48,28 @@ bool conquistaMasBarata(std::vector<Jugador>& jugadores, std::vector<Territorio>
     return true;
 }
 
+
 // Declaración de la función de ayuda
 void mostrarAyuda() {
+    fstream ayuda;
+    string texto;
+    ayuda.open("help.txt", ios::in); //archivo de modo lectura
+
+    if(ayuda.fail()){
+        std::cout << "No se pudo abrir el archivo" << endl;
+    }
+    
+    while(!ayuda.eof()){
+	getline(ayuda,texto);
+	std::cout << texto << endl;
+    }
+
+    ayuda.close();
+
+    std::cout << "Ingreso correctamente a la función mostrar Ayuda." << std::endl;
+    
+}
+/*void mostrarAyuda() {
     std::cout << "Ingreso correctamente a la función mostrar Ayuda." << std::endl;
 
     // Menú de ayuda
@@ -62,6 +83,6 @@ void mostrarAyuda() {
     std::cout << "7. Salir" << std::endl;
     std::cout << "========================" << std::endl;
     
-}
+} */
 
 
