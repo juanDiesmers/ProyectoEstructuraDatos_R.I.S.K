@@ -19,12 +19,30 @@ int main(){
        cout << "$ ";
        cin >> comando;
 
-       if(comando == "inicializar" || comando == "i"){
-            if(!juego_inicializado){
-                juego_inicializado = inicializarJuego(jugadores, territorios);
+       switch (comando[0]){
+        case 'i':
+            if(comando == "inicializar_juego" || comando == "i"){
+                inicializarJuego(jugadores, territorios);
             }
-       } else if 
+            break;
+        case 't':
+            if(comando == "turno_jugador" || comando == "tj"){
+                turnoJugador(jugadores, territorios);
+            }
+            break;
+        case 's':
+            if(comando ==  "salir" || comando == "s"){
+                salir();
+            }
+            break;
+        case 'h':
+            if(comando == "ayuda" || comando == "a"){
+                mostrarAyuda();
+            }
+            break;
+        defualt:
+            cout << "Comando invalido. Para ver la lista de comandos disponilbes, ingrese 'a' o 'ayuda'. " << endl;
+       }
     }
-    
     return 0;
 }
