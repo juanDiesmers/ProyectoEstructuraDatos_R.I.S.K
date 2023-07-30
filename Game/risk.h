@@ -38,7 +38,7 @@ void cargarContinentes(std::vector<Continente>& continentes);
 void cargarFronteras(std::map<std::string, std::vector<std::string >>& fronteras);
 void asignarObjetivosAleatorios(std::vector<Jugador>& jugadores);
 void asignarObjetivosPorPaises(std::vector<Jugador>& jugadores);
-void asignarObjetivosPorContinete(std::vector<Jugador>& jugadores);
+void asignarObjetivosPorContinente(std::vector<Jugador>& jugadores);
 void asignarObjetivosPorJugador(Jugador& jugador);
 void mostrarObjetivos(const std::vector<Jugador>& jugadores);
 void mostrarObjetivosJugador(const Jugador& jugador);
