@@ -27,7 +27,7 @@ void Jugador::reagruparEjercitos(Pais& origen, Pais& destino, int ejercitos){
 
 }
 
-void cargarContienentes(std::vector<Continente>& continentes){
+void cargarContinentes(std::vector<Continente>& continentes){
     std::cout <<"Ingreso correctamente a Cargar Contienentes. " << std::endl;
 
 }
