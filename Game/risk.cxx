@@ -10,4 +10,11 @@ void cargarPaises(std::vector<Pais>& paises){
 
     std::cout << "Funcion terminada...\n";
 
+
 }
+
+void Jugador::conquistaPais(Pais& pais, int ejercitos) {
+    std::cout << "Ingreso correctamente a la funcion conquisto pais." << std::endl;
+
+}
+
