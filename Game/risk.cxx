@@ -17,8 +17,9 @@ bool turnoJugador(std::vector<Jugador>& jugadores, std::vector<Territorio>& terr
 }
 
 void salir() {
-    std::cout << "Saliendo..." << std::endl;
-    exit;
+    std::cout << "Saliendo del juego. Hasta luego!" << std::endl;
+    system ("clear");
+    exit(0);//finaliza la ejecucion del programa
 }
 
 // Funciones para el componente 2: Almacenamento de partidas
