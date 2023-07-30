@@ -6,7 +6,7 @@ using namespace std;
 void cargarPaises(std::vector<Pais>& paises){
     std::cout << "Inicializando comando cargarPaises....\n";
 
-    std::cout << "cargando Pasies...\n";
+    std::cout << "cargando Paises...\n";
 
     std::cout << "Funcion terminada...\n";
 
