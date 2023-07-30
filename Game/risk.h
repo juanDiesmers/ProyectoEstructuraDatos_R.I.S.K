@@ -3,49 +3,37 @@
 
 #include <string>
 #include <vector>
-#include <map>
 
 //Declaraciones de las estructuras para paises y continentes
-struct Pais{
+struct Territorio{
+    int id;
     std::string nombre;
-    std::string continente;
-    int ejercitos;
+    std::string jugador;
+    int unidades_ejercito;
+    std::vector<int> territorios_vecinos;
 };
 
-struct Continente{
+//Estructura para representar un jugador
+struct Jugador{
     std::string nombre;
-    int bonusEjercito;
+    std::string color;
+    std::vector<Territorio> territorio;
+    std::vector<int> tarjetas;
 };
 
-//Declaracion de la clase para el jugador
-class Jugador{
-public:
-    std::string nombre;
-    std::vector<Pais> paisesControlados;
+//funciones del componente 1: Configuracion del juego
+bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
+bool turnoJugador(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
+void salir();
 
-    //
+//funcion para el componente 2: Almacenamento de partidas
+bool guardarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
+bool guardarPartidaComprimida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
+bool inicializarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
 
-    //Declaraciòn de la funcion para que el jugador realice acciones
-    void conquistaPais(Pais& pais, int ejercitos);
-    void atacarPais(Pais& pais, int ejercitos);
-    void reagruparEjercitos(Pais& origen, Pais& destino, int ejercitos);
-
-};
-
-//Declaracion de las funciones para cargar los datos y realizar opercaiones
-void cargarPaises(std::vector<Pais>& paises);
-void cargarContinentes(std::vector<Continente>& continentes);
-void cargarFronteras(std::map<std::string, std::vector<std::string >>& fronteras);
-void asignarObjetivosAleatorios(std::vector<Jugador>& jugadores);
-void asignarObjetivosPorPaises(std::vector<Jugador>& jugadores);
-void asignarObjetivosPorContinente(std::vector<Jugador>& jugadores);
-void asignarObjetivosPorJugador(Jugador& jugador);
-void mostrarObjetivos(const std::vector<Jugador>& jugadores);
-void mostrarObjetivosJugador(const Jugador& jugador);
-void mostrarPaises(const std::vector<Pais>& paises);
-void mostrarContinente(const std::vector<Continente>& continentes);
-void mostrarFronteras(const std::map<std::string , std::vector<std::string>>& fronteras);
-void mostrarConquista(const std::string& nombreTerritorio);
+//funciones para el componente 3: Estrategia del juego
+bool constoConquista(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios, std::string territorio);
+bool conquistaMasBarata(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
 
 //Declararion de la funcion de ayuda
 void mostrarAyuda();
