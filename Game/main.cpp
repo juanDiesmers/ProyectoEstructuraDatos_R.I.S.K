@@ -13,7 +13,8 @@ int main(){
 
     string comando;
 
-
+ pantallaPrincipal();
+    
     while (!juego_terminado)
     {
        cout << "$ ";
@@ -44,5 +45,6 @@ int main(){
             cout << "Comando invalido. Para ver la lista de comandos disponilbes, ingrese 'a' o 'ayuda'. " << endl;
        }
     }
+    limpiarPantalla();
     return 0;
 }

@@ -4,6 +4,23 @@
 using namespace std;
 //Implementacion de la funcion para cargar los datos y relizar operaciones
 
+void limpiarPantalla() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        cout << "\x1B[2J\x1B[H"; // Código ANSI para limpiar la pantalla en sistemas UNIX
+    #endif
+}
+
+void pantallaPrincipal() {
+    cout << "-----------------------------------------------------------------------------------" << endl;
+    cout << "|                                                                                  |" << endl;
+    cout << "|                            Bienvenid@ al Juego Risk                              |" << endl;
+    cout << "|                                                                                  |" << endl;
+    cout << " Por favor, digite el comando 'help' para desplegar todos los comandos disponibles." << endl;
+    cout << "-----------------------------------------------------------------------------------" << endl;
+}
+
 // Funciones del componente 1: Configuracion del juego
 bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
     std::cout << "Ingreso correctamente a la función inicializarJuego." << std::endl;
@@ -17,8 +34,9 @@ bool turnoJugador(std::vector<Jugador>& jugadores, std::vector<Territorio>& terr
 }
 
 void salir() {
+    limpiarPantalla();
     std::cout << "Saliendo del juego. Hasta luego!" << std::endl;
-    system ("clear");
+    //system ("clear");
     exit(0);//finaliza la ejecucion del programa
 }
 
@@ -52,6 +70,7 @@ bool conquistaMasBarata(std::vector<Jugador>& jugadores, std::vector<Territorio>
 
 // Declaración de la función de ayuda
 void mostrarAyuda() {
+    limpiarPantalla();
     fstream ayuda;
     string texto;
     ayuda.open("help.txt", ios::in); //archivo de modo lectura
