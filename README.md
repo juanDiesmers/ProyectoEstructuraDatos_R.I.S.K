@@ -9,7 +9,7 @@ Este programa esta vasado con c++ v.11
 
 # Compilacion del programa
 ### Windows
-    Si desea realizar la compilacion por Windows, debe de tener instalado el *minGW* en su sistema.
+Si desea realizar la compilacion por Windows, debe de tener instalado el *minGW* en su sistema.
 1.  Si esta seguro de que cuneta con este, puede entrar el *cmd* y escribir el siguiente comando:
 ```sh
 g++ --version
