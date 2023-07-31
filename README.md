@@ -7,7 +7,7 @@
 El presente documento muestra el uso y compilado del programa en C++ para el juego RISK.
 Este programa esta vasado con c++ v.11
 
-# Compilacion del programa
+### Compilacion del programa
 ### Windows
 Si desea realizar la compilacion por Windows, debe de tener instalado el **minGW** en su sistema.
 1.  Si esta seguro de que cuneta con este, puede entrar el **cmd** y escribir el siguiente comando:
