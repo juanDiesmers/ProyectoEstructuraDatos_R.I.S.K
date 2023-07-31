@@ -23,9 +23,9 @@ cd nombre_carpeta_contenedora_del_programa\ProyectoEstructuraDatos_R.I.S.K
 ```sh
 cd Game
 ```
-o en su caso podemos de una ingresar a la carpeta contenedora del programa `main()` 
+o en su caso podemos de una ingresar directamente a la carpeta contenedora del programa `main()` sin no queremos hacerlo por separado
 ```sh
-cd cd nombre_carpeta_contenedora_del_proyecto\ProyectoEstructuraDatos_R.I.S.K\Game
+cd nombre_carpeta_contenedora_del_proyecto\ProyectoEstructuraDatos_R.I.S.K\Game
 ```
 
 4. Estando en la carpeta contenedora el `main.cpp` podemos hacer la compilacion del peoyecto, con el siguiete comando:
@@ -60,7 +60,7 @@ cd project_folder_containing\ProyectoEstructuraDatos_R.I.S.K
 ```sh
 cd Game
 ```
-Or in your case we can enter the folder containing the `main()` program. 
+or we can directly enter the folder containing the `main()` program if we do not want to do it separately.
 ```sh
 cd project_folder_containing\ProyectoEstructuraDatos_R.I.S.K\Game
 ```
