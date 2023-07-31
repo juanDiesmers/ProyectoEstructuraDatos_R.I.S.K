@@ -1,94 +1,86 @@
 #include "risk.h"
 #include <iostream>
-
+#include <fstream>
 using namespace std;
 //Implementacion de la funcion para cargar los datos y relizar operaciones
-void cargarPaises(std::vector<Pais>& paises){
-    std::cout << "Inicializando comando cargarPaises....\n";
 
-    std::cout << "cargando Paises...\n";
+// Funciones del componente 1: Configuracion del juego
+bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
+    std::cout << "Ingreso correctamente a la función inicializarJuego." << std::endl;
+    return true;
+}
 
-    std::cout << "Funcion terminada...\n";
+bool turnoJugador(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
+    std::cout << "Ingreso correctamente a la función turnoJugador." << std::endl;
+    return true;
 
 }
 
-void Jugador::conquistaPais(Pais& pais, int ejercitos) {
-    std::cout << "Ingreso correctamente a la funcion conquisto pais." << std::endl;
-
+void salir() {
+    std::cout << "Saliendo del juego. Hasta luego!" << std::endl;
+    system ("clear");
+    exit(0);//finaliza la ejecucion del programa
 }
 
-void Jugador::atacarPais(Pais& pais, int ejercitos){
-    std::cout << "Ingreso correctamente a la funcion Atacar Pais." << std::endl;
-
+// Funciones para el componente 2: Almacenamento de partidas
+bool guardarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
+    std::cout << "Ingreso correctamente a la función guardarPartida." << std::endl;
+    return true;
 }
 
-void Jugador::reagruparEjercitos(Pais& origen, Pais& destino, int ejercitos){
-    std::cout << "Ingreso correctamente a reagrupar Ejercitos." << std::endl;
-
+bool guardarPartidaComprimida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
+    std::cout << "Ingreso correctamente a la función guardarPartidaComprimida." << std::endl;
+    return true;
 }
 
-void cargarContinentes(std::vector<Continente>& continentes){
-    std::cout <<"Ingreso correctamente a Cargar Contienentes. " << std::endl;
-
+bool inicializarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
+    std::cout << "Ingreso correctamente a la función inicializarPartida." << std::endl;
+    return true;
 }
 
-void cargarFronteras(std::map<std::string, std::vector<std::string>>& fronteras){
-    std:: cout <<"Ingreso correctamente a Cargar Fronteras. " << std::endl;
-    
-}
-//
-void asignarObjetivosAleatorios(std::vector<Jugador>& jugadores) {
-    std::cout << "Ingreso correctamente a la función asignar Objetivos Aleatorios." << std::endl;
-    
+// Funciones para el componente 3: Estrategia del juego
+bool constoConquista(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios, std::string territorio) {
+    std::cout << "Ingreso correctamente a la función constoConquista." << std::endl;
+    return true;
 }
 
-void asignarObjetivosPorPaises(std::vector<Jugador>& jugadores) {
-    std::cout << "Ingreso correctamente a la función asignar Objetivos PorPaises." << std::endl;
-    
+bool conquistaMasBarata(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
+    std::cout << "Ingreso correctamente a la función conquistaMasBarata." << std::endl;
+    return true;
 }
 
-void asignarObjetivosPorContinente(std::vector<Jugador>& jugadores) {
-    std::cout << "Ingreso correctamente a la función asignar Objetivos Por Continente." << std::endl;
-    
-}
-
-void asignarObjetivosPorJugador(Jugador& jugador) {
-    std::cout << "Ingreso correctamente a la función asignar Objetivos Por Jugador." << std::endl;
-    
-}
-
-void mostrarObjetivos(const std::vector<Jugador>& jugadores) {
-    std::cout << "Ingreso correctamente a la función mostrar Objetivos." << std::endl;
-    
-}
-
-void mostrarObjetivosJugador(const Jugador& jugador) {
-    std::cout << "Ingreso correctamente a la función mostrar Objetivos del Jugador." << std::endl;
-    
-}
-
-void mostrarPaises(const std::vector<Pais>& paises) {
-    std::cout << "Ingreso correctamente a la función mostrar Paises." << std::endl;
-    
-}
-
-void mostrarContinente(const std::vector<Continente>& continentes) {
-    std::cout << "Ingreso correctamente a la función mostrar Continente." << std::endl;
-    
-}
-
-void mostrarFronteras(const std::map<std::string, std::vector<std::string>>& fronteras) {
-    std::cout << "Ingreso correctamente a la función mostrar Fronteras." << std::endl;
-    
-}
-
-void mostrarConquista(const std::string& nombreTerritorio) {
-    std::cout << "Ingreso correctamente a la función mostrar Conquista." << std::endl;
-    
-}
-
+// Declaración de la función de ayuda
 void mostrarAyuda() {
+    fstream ayuda;
+    string texto;
+    ayuda.open("help.txt", ios::in); //archivo de modo lectura
+
+    if(ayuda.fail()){
+        std::cout << "No se pudo abrir el archivo" << endl;
+    }
+    
+    while(!ayuda.eof()){
+	getline(ayuda,texto);
+	std::cout << texto << endl;
+    }
+
+    ayuda.close();
+
     std::cout << "Ingreso correctamente a la función mostrar Ayuda." << std::endl;
     
 }
+/*void mostrarAyuda() {
+    std::cout << "Ingreso correctamente a la función mostrar Ayuda." << std::endl;
 
+    // Menú de ayuda
+    std::cout << "\n==== Menú de Ayuda ====" << std::endl;
+    std::cout << "1. Inicializar Juego" << std::endl;
+    std::cout << "2. Guardar Partida" << std::endl;
+    std::cout << "3. Guardar Partida Comprimida" << std::endl;
+    std::cout << "4. Inicializar Partida" << std::endl;
+    std::cout << "5. Costo de Conquista" << std::endl;
+    std::cout << "6. Conquista Más Barata" << std::endl;
+    std::cout << "7. Salir" << std::endl;
+    std::cout << "========================" << std::endl;
+    
+} */
