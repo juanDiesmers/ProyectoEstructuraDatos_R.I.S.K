@@ -45,7 +45,7 @@ En caso de ejecutar los comandos sin ningun cambio, puede aplicar el siguiente p
 The present document shows the use and compilation of the program in c++ for the game RISK.
 
 ### Program compilation
-### Windos
+### Windows
 If you want to compile for windows, yo must have *minGW* intalled on your system.
 1. if you are sure you have it, you cant enter *cmd* and type the following command:
 ```sh
