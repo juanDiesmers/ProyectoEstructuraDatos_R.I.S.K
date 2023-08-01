@@ -40,6 +40,31 @@ En caso de ejecutar los comandos sin ningun cambio, puede aplicar el siguiente p
 .\ejecutable.exe
 ```
 
+###Linux
+1. Debe de clonar el repositorio con el uso de `git clone`:
+desde la terminal de **linux** ingresamos a la carpeta la cual queremos clonar:
+```sh
+cd *rutaDescarga*
+```
+2. Pasamos a clonar nuestro repositorio a la carpeta seleccionada
+```sh
+git clone https://github.com/juanDiesmers/ProyectoEstructuraDatos_R.I.S.K.git
+```
+3. Una vez clonado el repositorio, ingresamos al directorio del proyecto **"Game"** usando el comando `cd`.
+```sh
+cd ProyectoEstructuraDatos_R.I.S.K/Game
+```
+#### Compilacion 
+
+4. Ya estando en directorio `Game` procedemos a la compilacion mediante **g++**.
+```sh
+g++ -std=c++11 -o ejecutable main.cpp risk.cxx
+```
+Esto compilara el programa y generara un archivo llamado `"ejecutbale"`.
+5. Ya estando compilado se puede ejecutar escribiendo:
+```sh
+./ejecutable
+```
 ## Ingles:
 
 The present document shows the use and compilation of the program in c++ for the game RISK.
