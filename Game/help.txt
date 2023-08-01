@@ -1,13 +1,13 @@
 Los comandos que puede digitar son los siguientes:
    |-------------------------------------------------------------------------------------------------------------------------|
-   |        Comandos a ingresar                    |                              Funcion                                    | 
+   |            Comandos a ingresar                |                              Funcion                                    | 
    |-----------------------------------------------|-------------------------------------------------------------------------|
    | inicializarJuego o i -----------------------> |    Iniciar el juego.                                                    |
    | turnoJugador o tj (id de jugador)-----------> |    El jugador toma opciones con su turno.                               |
    | salir o s ----------------------------------> |    Salir del juego.                                                     |
-   | guardar o gp (nombre de archivo) -----------> |    Se guarda el juego con el nombre de su eleccion en un txt.           |
-   | guardar_comprimido o gpc (nombre de archivo)->|    Se guarda el juego con el nombre de su eleccion en archivo binario.  |
-   | inicializar o ip (nombre de archivo) -- ----> |    Permite iniciar el juego con los datos guardados en un archivo.      |
-   | costo_conquista o cc (nombre de territorio)-->|    Muestra el costo de la conquista del territorio nombrado.            |
-   | conquista_mas_barata o cmb -----------------> |    Dice el territorio que puede ser conquistado con el menor costo.     |
+   | guardarPartida o gp (nombre de archivo) ----> |    Se guarda el juego con el nombre de su eleccion en un txt.           |
+   | guardarPartidaComprimida o gpc -------------> |    Se guarda el juego con el nombre de su eleccion en archivo binario.  |
+   | inicializarPartida o ip (nombre de archivo)-> |    Permite iniciar el juego con los datos guardados en un archivo.      |
+   | costoConquista o cc (nombre de territorio)--> |    Muestra el costo de la conquista del territorio nombrado.            |
+   | conquistaMasBarata o cmb -------------------> |    Dice el territorio que puede ser conquistado con el menor costo.     |
    |-------------------------------------------------------------------------------------------------------------------------|                                       
