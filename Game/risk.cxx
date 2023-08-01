@@ -13,11 +13,12 @@ void limpiarPantalla() {
 }
 
 void pantallaPrincipal() {
+    limpiarPantalla();
     cout << "-----------------------------------------------------------------------------------" << endl;
     cout << "|                                                                                  |" << endl;
     cout << "|                            Bienvenid@ al Juego Risk                              |" << endl;
     cout << "|                                                                                  |" << endl;
-    cout << " Por favor, digite el comando 'help' para desplegar todos los comandos disponibles." << endl;
+    cout << " Por favor, digite el comando 'ayuda' para desplegar todos los comandos disponibles." << endl;
     cout << "-----------------------------------------------------------------------------------" << endl;
 }
 
