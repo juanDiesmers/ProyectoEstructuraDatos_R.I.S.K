@@ -95,10 +95,36 @@ cd project_folder_containing\ProyectoEstructuraDatos_R.I.S.K\Game
 ```sh
 g++ -std=c++11 -o executable main.cpp risk.cxx
 ```
-This command performs the compilation of a program written in c++ using the `g++` compiler, `std=c++11`: Is a flag or option that is passed to the compiler to specify the c++ standard to be used, `-o ejecutbale`: Is another flag that indicates the name that will be given to the resulting executable file. In this case it was assigned the name `ejecutable`, it should be noted that it can be assigned any name you want, `main.cpp`: Is the name of the file containing the `main()` function, which is the entry point of the program, `risk.cxx`: Is the name of the file containing the definitions of the functions related to the RISK game.
+This command performs the compilation of a program written in c++ using the `g++` compiler, `std=c++11`: Is a flag or option that is passed to the compiler to specify the c++ standard to be used, `-o executable`: Is another flag that indicates the name that will be given to the resulting executable file. In this case it was assigned the name `executable`, it should be noted that it can be assigned any name you want, `main.cpp`: Is the name of the file containing the `main()` function, which is the entry point of the program, `risk.cxx`: Is the name of the file containing the definitions of the functions related to the RISK game.
 
 In summary this command compiles the files "**main.cpp**" and "**risk.cxx**" using the g++ compiler and produces an executable file with the set name. If the compilation is successful, the program can be executed using the following command entered into `cmd`:
 In case you execute the commands without any changes, you can apply the following to run the program.
 ```sh
 .\ejecutable.exe
+```
+### Linux
+1. You must clone the repository using `git clone`:
+from the **linux** terminal enter the folder you want to clone:
+```sh
+cd *downloadPath
+```
+2. We clone our repository to the selected folder
+```sh
+git clone https://github.com/juanDiesmers/ProyectoEstructuraDatos_R.I.S.K.git
+```
+3. Once the repository has been cloned, we enter the **"Game "** project directory using the `cd` command.
+````sh
+cd ProyectoEstructuraDatos_R.I.S.K\Game
+```
+#### Compile 
+
+4. Once in the `Game` directory we proceed to the compilation using **g++**.
+````sh
+g++ -std=c++11 -o executable main.cpp risk.cxx
+```
+This will compile the program and generate a file called ``executable``.
+
+5. Once compiled you can run it by typing:
+````sh
+./executable
 ```
