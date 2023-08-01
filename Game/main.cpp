@@ -7,14 +7,15 @@ int main(){
     vector<Jugador> jugadores;
     vector<Territorio> territorios;
 
-    bool juego_inicializado = false;
     bool juego_terminado = false;
     int turno_actual = 0;
 
     string comando;
 
- pantallaPrincipal();
+    pantallaPrincipal();
     
+
+
     while (!juego_terminado)
     {
        cout << "$ ";
@@ -22,18 +23,35 @@ int main(){
 
        switch (comando[0]){
         case 'i':
-            if(comando == "inicializar_juego" || comando == "i"){
+            if(comando == "inicializarJuego" || comando == "i"){
                 inicializarJuego(jugadores, territorios);
+            } else if (comando == "inicializarPartida" || comando == "ip"){
+                inicializarPartida("partida_guardada.txt", jugadores, territorios);
             }
             break;
         case 't':
-            if(comando == "turno_jugador" || comando == "tj"){
+            if(comando == "turnoJugador" || comando == "tj"){
                 turnoJugador(jugadores, territorios);
             }
             break;
         case 's':
             if(comando ==  "salir" || comando == "s"){
                 salir();
+                juego_terminado = true;
+            }
+            break;
+        case 'g':
+            if(comando == "guardarPartida" || comando == "gp"){
+                guardarPartida("partida_guardada.txt", jugadores, territorios);
+            } else if (comando == "guardarPartidaComprimida" || comando == "gpc"){
+                guardarPartidaComprimida("partida_comprimida", jugadores, territorios);
+            } 
+            break;
+        case 'c':
+            if(comando == "costoConquista" || comando == "cc"){
+                constoConquista(jugadores, territorios, "territorio_deseado");
+            }else if(comando == "conquistaMasBarata" || comando == "cmb"){
+                conquistaMasBarata(jugadores, territorios);
             }
             break;
         case 'a':
@@ -41,8 +59,10 @@ int main(){
                 mostrarAyuda();
             }
             break;
-        defualt:
-            cout << "Comando invalido. Para ver la lista de comandos disponilbes, ingrese 'a' o 'ayuda'. " << endl;
+        default:
+            system("clear");
+            cout << "Comando inválido. Para ver la lista de comandos disponibles, ingrese 'a' o 'ayuda'." << endl;
+            break;
        }
     }
     limpiarPantalla();
