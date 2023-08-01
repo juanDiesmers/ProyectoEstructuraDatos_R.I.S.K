@@ -23,11 +23,13 @@ void pantallaPrincipal() {
 
 // Funciones del componente 1: Configuracion del juego
 bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
+    limpiarPantalla();
     std::cout << "Ingreso correctamente a la función inicializarJuego." << std::endl;
     return true;
 }
 
 bool turnoJugador(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
+    limpiarPantalla();
     std::cout << "Ingreso correctamente a la función turnoJugador." << std::endl;
     return true;
 
@@ -42,27 +44,32 @@ void salir() {
 
 // Funciones para el componente 2: Almacenamento de partidas
 bool guardarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
+    limpiarPantalla();
     std::cout << "Ingreso correctamente a la función guardarPartida." << std::endl;
     return true;
 }
 
 bool guardarPartidaComprimida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
+    limpiarPantalla();
     std::cout << "Ingreso correctamente a la función guardarPartidaComprimida." << std::endl;
     return true;
 }
 
 bool inicializarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
+    limpiarPantalla();
     std::cout << "Ingreso correctamente a la función inicializarPartida." << std::endl;
     return true;
 }
 
 // Funciones para el componente 3: Estrategia del juego
 bool constoConquista(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios, std::string territorio) {
+    limpiarPantalla();
     std::cout << "Ingreso correctamente a la función constoConquista." << std::endl;
     return true;
 }
 
 bool conquistaMasBarata(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
+    limpiarPantalla();
     std::cout << "Ingreso correctamente a la función conquistaMasBarata." << std::endl;
     return true;
 }

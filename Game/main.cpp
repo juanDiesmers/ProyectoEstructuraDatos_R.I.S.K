@@ -14,8 +14,6 @@ int main(){
 
     pantallaPrincipal();
     
-
-
     while (!juego_terminado)
     {
        cout << "$ ";
@@ -60,7 +58,7 @@ int main(){
             }
             break;
         default:
-            system("clear");
+            limpiarPantalla();
             cout << "Comando inválido. Para ver la lista de comandos disponibles, ingrese 'a' o 'ayuda'." << endl;
             break;
        }
