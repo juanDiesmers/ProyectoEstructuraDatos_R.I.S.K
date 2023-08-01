@@ -21,6 +21,8 @@ struct Jugador{
     std::vector<int> tarjetas;
 };
 
+void limpiarPantalla();
+void pantallaPrincipal();
 //funciones del componente 1: Configuracion del juego
 bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
 bool turnoJugador(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
