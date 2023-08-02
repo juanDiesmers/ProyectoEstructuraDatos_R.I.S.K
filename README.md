@@ -2,6 +2,8 @@
 
 ## RISK IN C++
 
+[Click here to visit the Wiki](https://github.com/juanDiesmers/ProyectoEstructuraDatos_R.I.S.K/wiki)
+
 ## Español:
 
 El presente documento muestra el uso y compilado del programa en C++ para el juego RISK.
