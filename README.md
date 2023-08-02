@@ -2,7 +2,7 @@
 
 ## RISK IN C++
 
-[Click here to visit the Wiki](https://github.com/juanDiesmers/ProyectoEstructuraDatos_R.I.S.K/wiki)
+[Click here to visit the Wiki and meet the members ](https://github.com/juanDiesmers/ProyectoEstructuraDatos_R.I.S.K/wiki)
 
 ## Español:
 
