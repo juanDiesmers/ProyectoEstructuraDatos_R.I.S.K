@@ -2,10 +2,15 @@
 
 ## RISK IN C++
 
+[Click here to visit the Wiki and meet the members ](https://github.com/juanDiesmers/ProyectoEstructuraDatos_R.I.S.K/wiki)
+
+[If you want to read the documentation in English](https://github.com/juanDiesmers/ProyectoEstructuraDatos_R.I.S.K/blob/NewFuncion/DOC/Documentation%20English/Readme_English.md)
+[Si quiers saber de las versiones del programa y que se puede hacer en cada una](https://github.com/juanDiesmers/ProyectoEstructuraDatos_R.I.S.K/tree/NewFuncion/DOC/Releases)
+
 ## Español:
 
 El presente documento muestra el uso y compilado del programa en C++ para el juego RISK.
-Este programa esta vasado con c++ v.11
+Este programa esta basado con c++ v.11
 
 # Compilacion del programa
 ### Windows
@@ -30,9 +35,9 @@ cd nombre_carpeta_contenedora_del_proyecto\ProyectoEstructuraDatos_R.I.S.K\Game
 
 4. Estando en la carpeta contenedora el `main.cpp` podemos hacer la compilacion del peoyecto, con el siguiete comando:
 ```sh
-g++ -std=c++11 -o ejecutable main.cpp risk.cxx
+g++ -std=c++11 -o *nombreArchivo* main.cpp risk.cxx
 ```
-Este comando realiza la compilacion de un porgarama escrito en c++ utilizado el compilador `g++`, `std=c++11`: Es una bandera o opcion que se le pasa al compilador para especificar el estadar de c++ que se va a utilizar, `-o ejecutbale`: Es otra bandera que indica el nombre que se le dara al archivo ejecutable resultante. En este caso se le asigno el nombre de `ejecutable` cabe destacar que se le puede asignar el nombre que se desee, `main.cpp`: Es el nombre del archivo que contiene la funcion `main()`, que es el punto de entrada del programa, `risk.cxx`: Es el nomnbre del archivo que contiene las definiciones de las funciones relacionadas con el juego RISK
+Este comando realiza la compilacion de un porgarama escrito en c++ utilizado el compilador `g++`, `std=c++11`: Es una bandera o opcion que se le pasa al compilador para especificar el estadar de c++ que se va a utilizar, `-o *nombreArchivo*`: Es otra bandera que indica el nombre que se le dara al archivo ejecutable resultante. Cabe destacar que se le puede asignar el nombre que se desee, `main.cpp`: Es el nombre del archivo que contiene la funcion `main()`, que es el punto de entrada del programa, `risk.cxx`: Es el nomnbre del archivo que contiene las definiciones de las funciones relacionadas con el juego RISK
 
 En resumen este comando compila los archivos "**main.cpp**" y "**risk.cxx**" utilizando el compilador de g++ y produce un archivo ejecutable con el nombre establecido. Si la compilacion es exitosa, se podra ejecutar el programa utilizadno el siguiente comando introducido al `cmd`:
 En caso de ejecutar los comandos sin ningun cambio, puede aplicar el siguiente para correr el programa.
