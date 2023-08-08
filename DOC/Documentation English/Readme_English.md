@@ -2,6 +2,8 @@
 
 The present document shows the use and compilation of the program in c++ for the game RISK.
 
+[command list](https://github.com/juanDiesmers/ProyectoEstructuraDatos_R.I.S.K/blob/NewFuncion/DOC/Documentation%20English/Releases%20English/v.00.md)
+
 ### Program compilation
 ### Windows
 If you want to compile for windows, yo must have **minGW** intalled on your system.
