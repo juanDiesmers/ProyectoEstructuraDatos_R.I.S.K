@@ -1,5 +1,7 @@
 #include <iostream>
 #include "risk.h"
+#include "Turno/turno.h"
+#include "Asignacion/asignacion.h"
 
 using namespace std;
 

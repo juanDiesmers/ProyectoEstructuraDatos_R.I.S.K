@@ -23,7 +23,7 @@ g++ --version
 2.   Despues de comprobar de que si tiene **minGW** instalado correctamente, podemos iniciar con la compilacion del programa.
 Debemos de saber en que carpeta se encutra nuestro programa pues debemos de acceder a ella  con el siguiente comando en la **terminal** **(cmd)**
 ```sh
-cd nombre_carpeta_contenedora_del_programa\ProyectoEstructuraDatos_R.I.S.K
+cd *nombre_carpeta_contenedora_del_programa*\ProyectoEstructuraDatos_R.I.S.K
 ```
 3. Despues de ingresar debidamente a la carpeta contenedora del proyecto debemos de ingresar a la carpeta contenedora del `main.cpp`, en esto usamos el mismo comando anterior:
 ```sh
