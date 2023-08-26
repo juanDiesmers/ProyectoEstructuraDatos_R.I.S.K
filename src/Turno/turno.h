@@ -1,5 +1,6 @@
 #ifndef TURNO_H
 #define TURNO_H
+#include "../risk.h"
 
 //Funcion de Turno del jugador
 void turnoJugador(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
