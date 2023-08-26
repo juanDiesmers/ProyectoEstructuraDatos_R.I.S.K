@@ -15,6 +15,7 @@ struct Territorio{
 
 //Estructura para representar un jugador
 struct Jugador{
+    int id;
     std::string nombre;
     std::string color;
     std::vector<Territorio> territorio;
