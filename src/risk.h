@@ -5,8 +5,6 @@
 
 void limpiarPantalla();
 void pantallaPrincipal();
-//funciones del componente 1: Configuracion del juego
-bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
 
 //funcion para el componente 2: Almacenamento de partidas
 bool guardarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);

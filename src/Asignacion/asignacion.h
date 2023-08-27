@@ -22,4 +22,7 @@ struct Jugador{
     std::vector<int> tarjetas;
 };
 
+//funciones del componente 1: Configuracion del juego
+bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
+
 #endif //ASIGNACION_H

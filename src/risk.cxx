@@ -22,12 +22,6 @@ void pantallaPrincipal() {
     cout << "-----------------------------------------------------------------------------------" << endl;
 }
 
-// Funciones del componente 1: Configuracion del juego
-bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
-    limpiarPantalla();
-    std::cout << "Ingreso correctamente a la función inicializarJuego." << std::endl;
-    return true;
-}
 
 // Funciones para el componente 2: Almacenamento de partidas
 bool guardarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
