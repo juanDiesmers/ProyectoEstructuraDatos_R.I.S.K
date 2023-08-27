@@ -8,3 +8,4 @@ void turnoJugador(std::vector<Jugador>& jugadores, std::vector<Territorio>& terr
 void salir();
 //Validacion del jugador
 #endif //TURNO_H
+//hola

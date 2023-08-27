@@ -94,7 +94,7 @@ void obtenerNuevasUnidades(std::vector<Jugador>& jugadores, int id_jugador_actua
                 break;
             }
         }
-
+//hola
         // Si controla el continente, agregar unidades según las reglas
         if (controla_continente) {
             if (territorio.id == 1 || territorio.id == 2) {
