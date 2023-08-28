@@ -41,7 +41,7 @@ risk.cxx: Es el nombre del archivo fuente que contiene las definiciones de las f
 Turno/turno.cxx y Turno/funcionesTurno.cxx: Son los nombres de los archivos fuente que contienen las definiciones y funciones relacionadas con la gestión de los turnos en el juego.
 asignacion/asignacion.cxx: Es el nombre del archivo fuente que contiene las definiciones y funciones relacionadas con la asignación de territorios a los jugadores.
 ```sh
-.\*nombreEjecutable.exe*
+.\*nombreEjecutable*.exe
 ```
 ### Linux
 1. Debe de clonar el repositorio con el uso de `git clone`:
@@ -69,4 +69,3 @@ Esto compilara el programa y creara un archivo ejecuatable con el nombre que se 
 ```sh
 ./*nombreEjecutable*
 ```
-
