@@ -33,12 +33,15 @@ cd nombre_carpeta_contenedora_del_proyecto\ProyectoEstructuraDatos_R.I.S.K\src
 ```sh
 g++ -std=c++11 -o *nombre* main.cpp risk.cxx Turno/turno.cxx Turno/funcionesTurno.cxx asignacion/asignacion.cxx
 ```
-Este comando realiza la compilación de un programa escrito en c++ utilizado el compilador `g++`, `std=c++11`: Es una bandera o opcion que se le pasa al compilador para especificar el estandar de c++ que se va a utilizar, `-o *nombreArchivo*`: Es otra bandera que indica el nombre que se le asignara al archivo ejecutable resultante. Cabe destacar que se le puede asignar el nombre que se desee, `main.cpp`: Es el nombre del archivo que contiene la función `main()`, que es el punto de entrada del programa, `risk.cxx`: Es el nombre del archivo que contiene las definiciones de las funciones relacionadas con el juego RISK
-
-En resumen este comando compila los archivos "**main.cpp**" y "**risk.cxx**" utilizando el compilador de g++ y produce un archivo ejecutable con el nombre establecido. Si la compilación es exitosa, se podra ejecutar el programa utilizando el siguiente comando introducido al `cmd`:
-En caso de ejecutar los comandos sin ningún cambio, puede aplicar el siguiente para correr el programa.
+g++: Este comando invoca el compilador de C++ (GNU Compiler Collection para C++) para compilar el código fuente.
+-std=c++11: Esta opción le indica al compilador que utilice el estándar de C++11 durante la compilación. C++11 es una versión específica del lenguaje C++ con características y mejoras adicionales.
+-o nombre_del_ejecutable: Esta opción establece el nombre del archivo ejecutable resultante después de la compilación. Reemplaza nombre_del_ejecutable con el nombre que deseas darle al archivo ejecutable.
+main.cpp: Es el nombre del archivo fuente que contiene la función main(). Esta función es el punto de entrada de cualquier programa en C++.
+risk.cxx: Es el nombre del archivo fuente que contiene las definiciones de las funciones relacionadas con el juego Risk. Estas funciones deben ser definidas y utilizadas en tu programa.
+Turno/turno.cxx y Turno/funcionesTurno.cxx: Son los nombres de los archivos fuente que contienen las definiciones y funciones relacionadas con la gestión de los turnos en el juego.
+asignacion/asignacion.cxx: Es el nombre del archivo fuente que contiene las definiciones y funciones relacionadas con la asignación de territorios a los jugadores.
 ```sh
-.\ejecutable.exe
+.\*nombreEjecutable*.exe
 ```
 ### Linux
 1. Debe de clonar el repositorio con el uso de `git clone`:
@@ -60,9 +63,9 @@ cd ProyectoEstructuraDatos_R.I.S.K/src
 ```sh
 g++ -std=c++11 -o *nombre* main.cpp risk.cxx Turno/turno.cxx Turno/funcionesTurno.cxx asignacion/asignacion.cxx
 ```
-Esto compilara el programa y generara un archivo llamado `"ejecutable"`.
+Esto compilara el programa y creara un archivo ejecuatable con el nombre que se le haya asignado *nombre* 
 
 5. Ya estando compilado se puede ejecutar escribiendo:
 ```sh
-./ejecutable
+./*nombreEjecutable*
 ```
