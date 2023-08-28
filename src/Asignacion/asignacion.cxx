@@ -16,18 +16,13 @@ vector<string> paisesAfrica = {"Congo", "Africa Oriental", "Egipto", "Madagascar
 vector<string> paisesAsia = {"Afghanistan", "China", "India", "Irkutsk", "Japon", "Kamchatka", "Medio oriente", "Mongolia", "Siam", "Siberia", "Ural", "Yakutsk"};
 vector<string> paisesAustralia = {"Australia Oriental", "Indonesia", "Nueva Guinea", "Australia Occidental"};
 
-
-bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
-//eliminar al final
-
-
 // Funciones del componente 1: Configuracion del juego
-bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios){
+void  inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios){
     limpiarPantalla();
     std::cout << "Ingreso correctamente a la funcion inicializarJuego." << std::endl;
       if (!jugadores.empty() || !territorios.empty()) {
         cout << "El juego ya ha sido inicializado." << endl;
-        return false;
+        return;
     }
 
     cout << "Bienvenido a la inicializacion del juego Risk!" << endl;
@@ -424,9 +419,6 @@ bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& 
 }
     // Informar que la inicialización fue exitosa
     cout << "El juego se ha inicializado correctamente." << endl;
-
-    //verificar
-    return true;
 }
 
 
