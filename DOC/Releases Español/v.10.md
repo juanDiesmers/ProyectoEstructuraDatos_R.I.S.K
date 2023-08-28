@@ -11,6 +11,7 @@
 - Territorios Vecinos (territorios_vecinos), vector numerico, representa la cantidad de territorios cercanos al territorio de referencia. 
 #### Estructura Jugador
 - Identificador (Id), numérico, numero de referencia del jugador.
+- Numero de Piezas (numPiezas), numérico, referencia al numero de tropas que tiene cada jugador según el numero de participantes del juego actual.
 - Nombre (nombre), cadena, nombre del jugador.
 - Color (color), cadena, representa el color que llevara el jugador toda la partida.
 - Territorios (territorio), vector de tipo territorio, asocia los territorios que tiene el jugador.
@@ -30,6 +31,9 @@ inicializarJuego(jugadores referencia a vector de Jugador, territorios referenci
 
 turnoJugador(jugadores referencia a vector de Jugador, territorios referencia a vector de Territorio):
 - Función para establecer turnos en el juego para atacar, realizar ataques o fortificaciones a territorios.
+
+validacionJugador(jugadores referencia a vector de Jugador, identificador del jugador actual):
+- Booleana, que se ejecuta para comprobar la identificacion del jugador y si esta participando en el juego, además de asignar y verificar el turno siguiente durante la partida.
 
 obtenerNuevasUnidades(jugadores referencia a vector de Jugador, territorios referencia a vector de Territorio, identificador del jugador actual):
 - Función que calcula la ganancia de tropas según los casos del juego, donde el control de continentes o mas territorios añade mas soldados.
