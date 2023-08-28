@@ -59,6 +59,7 @@ void turnoJugador(vector<Jugador>& jugadores, vector<Territorio>& territorios){
         //Cambiar al siguiente jugador en la lista
         indice_jugador_actual = (indice_jugador_actual + 1) % jugadores.size();
     }while(true);
+    std::cout << "Saliendo de turnoJugador" << std::endl;
 }
 void salir() {
     limpiarPantalla();

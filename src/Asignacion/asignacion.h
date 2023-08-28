@@ -26,7 +26,4 @@ struct Jugador{
 //funciones del componente 1: Configuracion del juego
 void inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
 
-
-//eliminar al final
-
 #endif //ASIGNACION_H

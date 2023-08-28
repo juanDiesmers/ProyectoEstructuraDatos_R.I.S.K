@@ -27,18 +27,21 @@ void pantallaPrincipal() {
 bool guardarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
     limpiarPantalla();
     std::cout << "Ingreso correctamente a la función guardarPartida." << std::endl;
+    std::cout << "Saliendo de guardar partida";
     return true;
 }
 
 bool guardarPartidaComprimida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
     limpiarPantalla();
     std::cout << "Ingreso correctamente a la función guardarPartidaComprimida." << std::endl;
+    std::cout << "Saliendo de guardar partida comprimida";
     return true;
 }
 
 bool inicializarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
     limpiarPantalla();
     std::cout << "Ingreso correctamente a la función inicializarPartida." << std::endl;
+    std::cout << "Saliendo de inicializar partida";
     return true;
 }
 
@@ -46,12 +49,14 @@ bool inicializarPartida(std::string nombre_archivo, std::vector<Jugador>& jugado
 bool constoConquista(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios, std::string territorio) {
     limpiarPantalla();
     std::cout << "Ingreso correctamente a la función constoConquista." << std::endl;
+    std::cout << "Saliendo de constoConquista";
     return true;
 }
 
 bool conquistaMasBarata(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
     limpiarPantalla();
     std::cout << "Ingreso correctamente a la función conquistaMasBarata." << std::endl;
+    std::cout << "Saliendo de conquistaMasBarata";
     return true;
 }
 

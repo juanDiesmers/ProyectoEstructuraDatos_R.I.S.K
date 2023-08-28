@@ -419,6 +419,7 @@ void  inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>&
 }
     // Informar que la inicialización fue exitosa
     cout << "El juego se ha inicializado correctamente." << endl;
+    std::cout << "Salio correctamente de la funcion inicializarJuego." << std::endl;
 }
 
 
