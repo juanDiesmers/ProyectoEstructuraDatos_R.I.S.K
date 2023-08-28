@@ -9,6 +9,13 @@ using namespace std;
 
 void turnoJugador(vector<Jugador>& jugadores, vector<Territorio>& territorios){
     limpiarPantalla();
+
+    //Verificar que hay jugadores en la lista
+    if(jugadores.empty()){
+        cout << "Inicializacion de la partida fallida. No hay jugadores en el juego." << endl;
+        cout << "Saliendo de turnoJugador" << endl;
+        return;
+    }
     //Escribir en pantalla que ingreso a la funcion de TurnoJugador
     cout << "Ingreso a la funcion de TurnoJugador" << endl;
 
@@ -28,8 +35,11 @@ void turnoJugador(vector<Jugador>& jugadores, vector<Territorio>& territorios){
         do{
             cout << "Ingrese el ID del jugador actual: ";
             if(cin >> id_jugador_actual){
+                if(id_jugador_actual == -1){
+                    return;
+                }
                 jugador_valido = validacionJugador(jugadores, id_jugador_actual);
-                if(!jugador_valido){
+                if(!jugador_valido ){
                     cout << "El ID del jugador no es valido" << endl;
                 }
             } else {
