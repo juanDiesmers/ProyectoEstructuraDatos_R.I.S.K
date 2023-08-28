@@ -158,7 +158,20 @@ bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& 
                     continente_seleccionado = "America del Norte"; // Asigna el continente seleccionado
                 } else {
                 cout << "Opcion de pais no valida." << endl;
-                
+                    while (true) {
+                        cout << "Seleccione un pais (1-9): ";
+                        cin >> opcion_pais;
+
+                        if (opcion_pais >= 1 && opcion_pais <= 9) {
+                            pais_seleccionado = paisesAmericaDelNorte[opcion_pais - 1];
+                            continente_seleccionado = "America del Norte";
+                            paisValido = true;
+                            break; // Sale del ciclo interno cuando se ingresa un dato válido
+                        } else {
+                            cout << "Opcion de pais no valida." << endl;
+                            
+                        }
+                    }
             }
         
             break;
@@ -179,8 +192,21 @@ bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& 
                     continente_seleccionado = "America del Sur"; // Asigna el continente seleccionado
                 } else {
                 cout << "Opcion de pais no valida." << endl;
-            }
+                while (true) {
+                        cout << "Seleccione un pais (1-4): ";
+                        cin >> opcion_pais;
 
+                        if (opcion_pais >= 1 && opcion_pais <= 4) {
+                            pais_seleccionado = paisesAmericaDelSur[opcion_pais - 1];
+                            continente_seleccionado = "America del Sur";
+                            paisValido = true;
+                            break;
+                        } else {
+                            cout << "Opcion de pais no valida." << endl;
+                        }
+                    }
+                }
+        
             break;
 
         case 3: //Europa
@@ -202,7 +228,21 @@ bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& 
                     continente_seleccionado = "Europa"; // Asigna el continente seleccionado
                 } else {
                 cout << "Opcion de pais no valida." << endl;
-            }
+                while (true) {
+                        cout << "Seleccione un pais (1-7): ";
+                        cin >> opcion_pais;
+
+                        if (opcion_pais >= 1 && opcion_pais <= 7) {
+                            pais_seleccionado = paisesAmericaDelSur[opcion_pais - 1];
+                            continente_seleccionado = "Europa";
+                            paisValido = true;
+                            break;
+                        } else {
+                            cout << "Opcion de pais no valida." << endl;
+                        }
+                    }
+                }
+        
 
             break;
 
@@ -224,7 +264,21 @@ bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& 
                     continente_seleccionado = "Africa"; // Asigna el continente seleccionado
                 } else {
                 cout << "Opcion de pais no valida." << endl;
-            }
+                while (true) {
+                        cout << "Seleccione un pais (1-6): ";
+                        cin >> opcion_pais;
+
+                        if (opcion_pais >= 1 && opcion_pais <= 6) {
+                            pais_seleccionado = paisesAmericaDelSur[opcion_pais - 1];
+                            continente_seleccionado = "Africa";
+                            paisValido = true;
+                            break;
+                        } else {
+                            cout << "Opcion de pais no valida." << endl;
+                        }
+                    }
+                }
+            
 
             break;    
         
@@ -252,7 +306,21 @@ bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& 
                     continente_seleccionado = "Asia"; // Asigna el continente seleccionado
                 } else {
                 cout << "Opcion de pais no valida." << endl;
-            }
+                while (true) {
+                        cout << "Seleccione un pais (1-12): ";
+                        cin >> opcion_pais;
+
+                        if (opcion_pais >= 1 && opcion_pais <= 12) {
+                            pais_seleccionado = paisesAmericaDelSur[opcion_pais - 1];
+                            continente_seleccionado = "Asia";
+                            paisValido = true;
+                            break;
+                        } else {
+                            cout << "Opcion de pais no valida." << endl;
+                        }
+                    }
+                }
+            
 
             break; 
 
@@ -272,7 +340,21 @@ bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& 
                     continente_seleccionado = "Australia"; // Asigna el continente seleccionado
                 } else {
                 cout << "Opcion de pais no valida." << endl;
-            }
+                while (true) {
+                        cout << "Seleccione un pais (1-4): ";
+                        cin >> opcion_pais;
+
+                        if (opcion_pais >= 1 && opcion_pais <= 4) {
+                            pais_seleccionado = paisesAmericaDelSur[opcion_pais - 1];
+                            continente_seleccionado = "Australia";
+                            paisValido = true;
+                            break;
+                        } else {
+                            cout << "Opcion de pais no valida." << endl;
+                        }
+                    }
+                }
+            
 
             break; 
 
@@ -313,7 +395,7 @@ bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& 
         territorios.push_back(territorio); // Agregar el territorio a la lista global de territorios
         jugador.numPiezas--; // Restar una pieza al jugador
 
-        cout << jugador.nombre << " ha seleccionado el territorio << " << pais_seleccionado << " >> en el continente << " << continente_seleccionado <<" >>" << endl;
+        cout << endl <<"< "<< jugador.nombre << " > ha seleccionado el territorio << " << pais_seleccionado << " >> en el continente << " << continente_seleccionado <<" >>" << endl;
         cout << "Piezas restantes de " << jugador.nombre << ": " << jugador.numPiezas << endl;
         cout << "Pieza asignada a " << territorio.nombre << ", Numero de piezas actual: "<< jugador.numPiezas << endl;
 
