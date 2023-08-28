@@ -1,11 +1,11 @@
 #include <iostream> 
-#include "asignacion.h"
-
-#include "../turno/turno.h"
-#include "../risk.h"
 #include <vector>
 #include <string>
-#include <algorithm> // Necesario para std::transform
+#include <algorithm> 
+
+#include "asignacion.h"
+#include "../turno/turno.h"
+#include "../risk.h"
 
 using namespace std;
 
