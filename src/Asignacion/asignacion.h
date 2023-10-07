@@ -21,7 +21,14 @@ struct Jugador{
     std::string nombre;
     std::string color;
     std::vector<Territorio> territorio;
-    std::vector<int> tarjetas;
+    std::vector<Carta> cartas;
+};
+
+struct Carta {
+    enum Tipo { Infanteria, Caballeria, Artilleria, Comodin };
+    Tipo tipo;
+
+    Carta(Tipo t) : tipo(t) {}
 };
 //funciones del componente 1: Configuracion del juego
 void inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
