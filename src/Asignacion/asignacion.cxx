@@ -169,7 +169,7 @@ bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& 
                         break;
                 }
 
-                cout << "Seleccione un pais (1-6";
+                cout << "Seleccione un pais (1-";
                 switch (opcion_continente) {
                     case 1: cout << paisesAmericaDelNorte.size(); break;
                     case 2: cout << paisesAmericaDelSur.size(); break;
@@ -267,34 +267,37 @@ bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& 
                     }
                 }
 
-                //Agregar el territorio como "enemigo" al otro jugador
-                for (Jugador& otroJugador : jugadores) {
-                    if (otroJugador.id != jugador.id) {
-                        for (Territorio& otroTerritorio : otroJugador.territorio) {
-                            if (otroTerritorio.nombre == pais_seleccionado) {
-                                VecinoEnemigo vecino;
-                                vecino.nombre = territorio.nombre;
-                                vecino.esEnemigo = true;
-                                otroTerritorio.vecinos_enemigos.push_back(vecino);
-                            }
-                        }
-                    }
-                }
+// Agregar el territorio como "enemigo" al otro jugador
+// Verificar si el territorio no es del jugador actual
+bool territorioNoEsDelJugadorActual = true;
+for (const Territorio& territorioDelJugador : jugador.territorio) {
+    if (territorioDelJugador.nombre == territorio.nombre) {
+        territorioNoEsDelJugadorActual = false;
+        break; // No es necesario buscar más
+    }
+}
 
-                cout << "Territorio " << territorio.nombre << " tiene los siguientes enemigos: ";
-for (const Jugador& otroJugador : jugadores) {
+// Agregar el territorio como "enemigo" a otros jugadores
+for (Jugador& otroJugador : jugadores) {
+    
     if (otroJugador.id != jugador.id) {
-        for (const Territorio& otroTerritorio : otroJugador.territorio) {
-            for (const VecinoEnemigo& vecino : otroTerritorio.vecinos_enemigos) {
-                if (vecino.nombre == territorio.nombre && vecino.esEnemigo) {
-                    if (otroTerritorio.nombre != territorio.nombre) {
-                        cout << otroTerritorio.nombre << ", ";
-                    }
-                }
-            }
+        cout << "Iterando para el jugador " << otroJugador.nombre << endl;
+        cout << "Anadiendo enemigos para " << otroJugador.nombre << endl;
+        for (Territorio& otroTerritorio : otroJugador.territorio) {
+            VecinoEnemigo vecino;
+            vecino.nombre = territorio.nombre;
+            vecino.id = territorio.id;
+            otroTerritorio.vecinos_enemigos.push_back(vecino);
+            cout << "Territorio " << territorio.nombre << " anadido como enemigo a " << otroJugador.nombre << endl;
         }
     }
 }
+                cout << "Territorio " << territorio.nombre << " tiene los siguientes enemigos: ";
+                for (const VecinoEnemigo& vecino : territorio.vecinos_enemigos) {
+                    if (vecino.esEnemigo) {
+                        cout << vecino.nombre << ", ";
+                    }
+                }
                 cout << endl;
             }
         }
