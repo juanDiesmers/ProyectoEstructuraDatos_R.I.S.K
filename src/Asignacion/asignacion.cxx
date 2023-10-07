@@ -1,11 +1,11 @@
 #include <iostream> 
+#include "asignacion.h"
+
+#include "../Turno/turno.h"
+#include "../risk.h"
 #include <vector>
 #include <string>
-#include <algorithm> 
-
-#include "asignacion.h"
-#include "../turno/turno.h"
-#include "../risk.h"
+#include <algorithm> // Necesario para std::transform
 
 using namespace std;
 
@@ -16,13 +16,18 @@ vector<string> paisesAfrica = {"Congo", "Africa Oriental", "Egipto", "Madagascar
 vector<string> paisesAsia = {"Afghanistan", "China", "India", "Irkutsk", "Japon", "Kamchatka", "Medio oriente", "Mongolia", "Siam", "Siberia", "Ural", "Yakutsk"};
 vector<string> paisesAustralia = {"Australia Oriental", "Indonesia", "Nueva Guinea", "Australia Occidental"};
 
+
+bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
+//eliminar al final
+
+
 // Funciones del componente 1: Configuracion del juego
-void  inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios){
+bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios){
     limpiarPantalla();
     std::cout << "Ingreso correctamente a la funcion inicializarJuego." << std::endl;
       if (!jugadores.empty() || !territorios.empty()) {
         cout << "El juego ya ha sido inicializado." << endl;
-        return;
+        return false;
     }
 
     cout << "Bienvenido a la inicializacion del juego Risk!" << endl;
@@ -38,7 +43,7 @@ void  inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>&
         }
     }
 
-    jugadores.resize(num_jugadores);
+    jugadores.resize(num_jugadores); //redimensionar el vector jugadores a un tamaño especifico
 
     // Lógica para asignar la cantidad de piezas según el número de jugadores
     int numPiezas;
@@ -95,6 +100,7 @@ void  inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>&
 
     cout << "Jugadores registrados:" << endl;
     for (const Jugador& jugador : jugadores) {
+        
         cout << "ID: " << jugador.id << " | Nombre: " << jugador.nombre << " | Color: " << jugador.color << endl;
     }
 
@@ -107,8 +113,13 @@ void  inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>&
         jugador.numPiezas = numPiezas;
     }
 
+    // Bucle para controlar los turnos hasta que se llenen todos los territorios
+    int territoriosAsignados = 0;
+    
+    do {
     // Lógica para seleccionar continentes y territorios
     for (Jugador& jugador : jugadores) {
+        
     cout << endl <<"Turno de " << jugador.nombre << " para seleccionar continentes y territorios:" << endl;
 
     string pais_seleccionado; // Declaración de pais_seleccionado
@@ -375,51 +386,63 @@ void  inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>&
             }
         }
 
-    if (!paisYaSeleccionado) {
-        paisValido = true; // Marcar que se eligió un país válido
-        Territorio territorio;
-        territorio.nombre = pais_seleccionado;// se gurda el pais seleccionado
-        territorio.jugador = jugador.nombre; // se guarda el territorio en cada Jugador
-        territorio.id = jugador.territorio.size() + 1; // Asignar un ID único al territorio
-        territorio.unidades_ejercito = 1; // Asignar una unidad al territorio
-        
-        territorio.continente = continente_seleccionado; // Asignar el continente al territorio
+            if (!paisYaSeleccionado) {
+                    paisValido = true; // Marcar que se eligió un país válido
+                    Territorio territorio;
+                    territorio.nombre = pais_seleccionado;// se gurda el pais seleccionado
+                    territorio.jugador = jugador.nombre; // se guarda el territorio en cada Jugador
+                    territorio.id = jugador.territorio.size() + 1; // Asignar un ID único al territorio
+                    territorio.unidades_ejercito = 1; // Asignar una unidad al territorio
+                    
+                    territorio.continente = continente_seleccionado; // Asignar el continente al territorio
 
 
-        jugador.territorio.push_back(territorio); // Agregar el territorio al vector del jugador
-        territorios.push_back(territorio); // Agregar el territorio a la lista global de territorios
-        jugador.numPiezas--; // Restar una pieza al jugador
+                    jugador.territorio.push_back(territorio); // Agregar el territorio al vector del jugador
+                    territorios.push_back(territorio); // Agregar el territorio a la lista global de territorios
+                    jugador.numPiezas--; // Restar una pieza al jugador
 
-        cout << endl <<"< "<< jugador.nombre << " > ha seleccionado el territorio << " << pais_seleccionado << " >> en el continente << " << continente_seleccionado <<" >>" << endl;
-        cout << "Piezas restantes de " << jugador.nombre << ": " << jugador.numPiezas << endl;
-        cout << "Pieza asignada a " << territorio.nombre << ", Numero de piezas actual: "<< jugador.numPiezas << endl;
+                    cout << endl <<"< "<< jugador.nombre << " > ha seleccionado el territorio << " << pais_seleccionado << " >> en el continente << " << continente_seleccionado <<" >>" << endl;
+                    cout << "Piezas restantes de " << jugador.nombre << ": " << jugador.numPiezas << endl;
+                    cout << "Pieza asignada a " << territorio.nombre << ", Numero de piezas actual: "<< jugador.numPiezas << endl;
 
-        // Asignar territorios vecinos solo del mismo continente y otros jugadores
-        for (Territorio& territorio : jugador.territorio) {
-            for (const Territorio& otroTerritorio : territorios) {
-                if (otroTerritorio.continente == territorio.continente && otroTerritorio.nombre != territorio.nombre) {
-                    territorio.territorios_vecinos.push_back(otroTerritorio.id);
+                    
+
+                // Asignar territorios vecinos solo del mismo continente y otros jugadores
+                for (Territorio& territorio : jugador.territorio) {
+                    for (const Territorio& otroTerritorio : territorios) {
+                        if (otroTerritorio.continente == territorio.continente && otroTerritorio.nombre != territorio.nombre) {
+                            territorio.territorios_vecinos.push_back(otroTerritorio.id);
+                        }
+                    }
+            
+                    // Agrega este mensaje de depuración para ver los nombres de los territorios vecinos
+                    cout << "Territorio " << territorio.nombre << " tiene los siguientes vecinos: ";
+                    for (int vecino_id : territorio.territorios_vecinos) {
+                        const Territorio& vecino = territorios[vecino_id - 1];
+                        cout << vecino.nombre << ", ";
+                    }
+                    cout << endl;
                 }
-            }
-    
-            // Agrega este mensaje de depuración para ver los nombres de los territorios vecinos
-            cout << "Territorio " << territorio.nombre << " tiene los siguientes vecinos: ";
-            for (int vecino_id : territorio.territorios_vecinos) {
-                const Territorio& vecino = territorios[vecino_id - 1];
-                cout << vecino.nombre << ", ";
-            }
-            cout << endl;
-        }
+
+            
         
             
-        }   
+            }   
     
-    }
+        }
 
-}
+    }
+    territoriosAsignados++;
+    if(territoriosAsignados == 2){
+        break;
+    }
+} while (territoriosAsignados != 2);
+
     // Informar que la inicialización fue exitosa
     cout << "El juego se ha inicializado correctamente." << endl;
-    std::cout << "Salio correctamente de la funcion inicializarJuego." << std::endl;
+
+    //verificar
+    return true;
 }
 
 
