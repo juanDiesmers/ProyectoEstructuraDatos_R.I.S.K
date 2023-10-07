@@ -13,6 +13,16 @@ void limpiarPantalla() {
     #endif
 }
 
+void pausarPantalla() {
+    #ifdef _WIN32
+        system("pause");
+    #else
+        cout << "Presione enter para continuar..." << endl;
+        cin.ignore();
+        cin.get();
+    #endif
+}
+
 void pantallaPrincipal() {
     limpiarPantalla();
     cout << "-----------------------------------------------------------------------------------" << endl;

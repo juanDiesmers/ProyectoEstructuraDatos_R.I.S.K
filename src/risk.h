@@ -5,6 +5,7 @@
 
 void limpiarPantalla();
 void pantallaPrincipal();
+void pausarPantalla();
 
 //funcion para el componente 2: Almacenamento de partidas
 bool guardarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);

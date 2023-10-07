@@ -3,6 +3,13 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
+
+struct VecinoEnemigo{
+    int id;
+    std::string nombre;
+    bool esEnemigo;
+};
 
 //Declaraciones de las estructuras para paises y continentes
 struct Territorio{
@@ -12,6 +19,7 @@ struct Territorio{
     int unidades_ejercito;
     std::string continente;
     std::vector<int> territorios_vecinos;
+    std::vector<VecinoEnemigo> vecinos_enemigos;
 };
 
 //Estructura para representar un jugador
@@ -25,8 +33,5 @@ struct Jugador{
 };
 //funciones del componente 1: Configuracion del juego
 bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
-
-
-//eliminar al final
 
 #endif //ASIGNACION_H

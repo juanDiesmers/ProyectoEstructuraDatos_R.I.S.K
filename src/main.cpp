@@ -2,6 +2,7 @@
 #include "Turno/turno.h"
 #include "risk.h"
 #include <iostream>
+#include <vector>
 
 using namespace std;
 

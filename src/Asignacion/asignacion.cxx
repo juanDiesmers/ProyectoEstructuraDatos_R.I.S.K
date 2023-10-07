@@ -1,51 +1,41 @@
-#include <iostream> 
+#include <iostream>
 #include "asignacion.h"
-
-#include "../Turno/turno.h"
 #include "../risk.h"
-#include <vector>
-#include <string>
-#include <algorithm> // Necesario para std::transform
 
 using namespace std;
 
-vector<string> paisesAmericaDelNorte = {"Alaska", "Alberta", "America Central", "Estados unidos Orientales", "Groenlandia", "Territorio Noroccidental", "Ontario", "Quebec", "Estados Unidos Occidentales"};
+vector<string> paisesAmericaDelNorte = {"Alaska", "Alberta", "America Central", "Estados Unidos Orientales", "Groenlandia", "Territorio Noroccidental", "Ontario", "Quebec", "Estados Unidos Occidentales"};
 vector<string> paisesAmericaDelSur = {"Argentina", "Brasil", "Peru", "Venezuela"};
 vector<string> paisesEuropa = {"Gran Bretania", "Islandia", "Europa del norte", "Escandinavia", "Europa del sur", "Ucrania", "Europa Occidenal"};
 vector<string> paisesAfrica = {"Congo", "Africa Oriental", "Egipto", "Madagascar", "Africa del norte", "Africa del Sur"};
 vector<string> paisesAsia = {"Afghanistan", "China", "India", "Irkutsk", "Japon", "Kamchatka", "Medio oriente", "Mongolia", "Siam", "Siberia", "Ural", "Yakutsk"};
 vector<string> paisesAustralia = {"Australia Oriental", "Indonesia", "Nueva Guinea", "Australia Occidental"};
 
-
-bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
-//eliminar al final
-
-
-// Funciones del componente 1: Configuracion del juego
+// Funciones del componente 1: Configuración del juego
 bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios){
     limpiarPantalla();
-    std::cout << "Ingreso correctamente a la funcion inicializarJuego." << std::endl;
-      if (!jugadores.empty() || !territorios.empty()) {
+    cout << "Ingresando a la función inicializarJuego." << endl;
+    
+    if (!jugadores.empty() || !territorios.empty()) {
         cout << "El juego ya ha sido inicializado." << endl;
         return false;
     }
 
-    cout << "Bienvenido a la inicializacion del juego Risk!" << endl;
+    cout << "Bienvenido a la inicialización del juego Risk!" << endl;
 
     int num_jugadores;
 
     while (num_jugadores < 2 || num_jugadores > 6) {
-        cout << "Ingrese el numero de jugadores (2-6): ";
+        cout << "Ingrese el número de jugadores (2-6): ";
         cin >> num_jugadores;
 
         if (num_jugadores < 2 || num_jugadores > 6) {
-            cout << "Numero de jugadores no valido." << endl;
+            cout << "Número de jugadores no válido." << endl;
         }
     }
 
-    jugadores.resize(num_jugadores); //redimensionar el vector jugadores a un tamaño especifico
+    jugadores.resize(num_jugadores); 
 
-    // Lógica para asignar la cantidad de piezas según el número de jugadores
     int numPiezas;
     if (num_jugadores == 2) {
         numPiezas = 40;
@@ -58,9 +48,7 @@ bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& 
     } else if (num_jugadores == 6) {
         numPiezas = 20;
     }
-    
 
-    //arrglar si se coloca un numero
     for (int i = 0; i < num_jugadores; i++) {
         cout << "Jugador " << i + 1 << ": Ingrese su nombre (solo un nombre): ";
         cin >> jugadores[i].nombre;
@@ -70,380 +58,254 @@ bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& 
             cout << "Seleccione su color (verde, azul, rojo, amarillo, negro, gris): ";
             cin >> jugadores[i].color;
 
-        // Convertir la entrada del usuario a minúsculas
+            // Convertir la entrada del usuario a minúsculas
             transform(jugadores[i].color.begin(), jugadores[i].color.end(), jugadores[i].color.begin(), ::tolower);
 
-        // Validar color
-        if (jugadores[i].color == "verde" || jugadores[i].color == "azul" ||
-            jugadores[i].color == "rojo" || jugadores[i].color == "amarillo" ||
-            jugadores[i].color == "negro" || jugadores[i].color == "gris") {
-            color_valido = true;
+            // Validar color
+            if (jugadores[i].color == "verde" || jugadores[i].color == "azul" ||
+                jugadores[i].color == "rojo" || jugadores[i].color == "amarillo" ||
+                jugadores[i].color == "negro" || jugadores[i].color == "gris") {
+                color_valido = true;
             } else {
-            cout << "Color no valido. Seleccione un color correcto." << endl;
+                cout << "Color no válido. Seleccione un color correcto." << endl;
             }
         }
+
         // Validar que el color no esté en uso por otro jugador
         for (int j = 0; j < i; j++) {
             if (jugadores[j].color == jugadores[i].color) {
-                cout << "Color ya esta en uso por otro jugador. Seleccione otro." << endl;
+                cout << "Color ya está en uso por otro jugador. Seleccione otro." << endl;
                 color_valido = false;
                 break;
             }
         }
+
         if (!color_valido) {
             i--; // Repetir el ciclo para el mismo jugador
             continue;
         }
 
-        jugadores[i].id = i + 1; // Asignar ID de jugador
+        jugadores[i].id = i + 1; 
     }
 
-    cout << "Jugadores registrados:" << endl;
-    for (const Jugador& jugador : jugadores) {
-        
-        cout << "ID: " << jugador.id << " | Nombre: " << jugador.nombre << " | Color: " << jugador.color << endl;
+    cout << "Jugadores registrados: " << endl;
+    for(const Jugador& jugador : jugadores) {
+        cout << "ID: " << jugador.id << "| Nombre: " <<  jugador.nombre << "| Color: " << jugador.color << endl;  
     }
+    pausarPantalla();
+    limpiarPantalla();
+    
+    cout << "Primer jugador: " << jugadores[0].nombre << "| Color: " << jugadores[0].color << endl;
 
-     // Mostrar el primer jugador registrado con su color
-    cout << endl << "Primer Jugador: " << jugadores[0].nombre << " | Color: " << jugadores[0].color << endl;
-
-
-    // Asignar la cantidad de piezas a cada jugador -----------------------------------------------------
     for (Jugador& jugador : jugadores) {
         jugador.numPiezas = numPiezas;
     }
 
-    // Bucle para controlar los turnos hasta que se llenen todos los territorios
     int territoriosAsignados = 0;
-    
+
     do {
-    // Lógica para seleccionar continentes y territorios
-    for (Jugador& jugador : jugadores) {
-        
-    cout << endl <<"Turno de " << jugador.nombre << " para seleccionar continentes y territorios:" << endl;
+        for (Jugador& jugador : jugadores) {
+            cout << endl << "Turno de " << jugador.nombre << " para seleccionar continentes y territorios:" << endl;
 
-    string pais_seleccionado; // Declaración de pais_seleccionado
-    string continente_seleccionado;
+            string pais_seleccionado; 
+            string continente_seleccionado;
 
-    bool paisValido = false; // Bandera para controlar si se eligió un país válido
-    
-    while (!paisValido) { // Repetir hasta que se elija un país válido
-    cout << "Lista de continentes disponibles:" << endl;
-    cout << "1. America del Norte" << endl;
-    cout << "2. America del Sur" << endl;
-    cout << "3. Europa" << endl;
-    cout << "4. Africa" << endl;
-    cout << "5. Asia" << endl;
-    cout << "6. Oceania" << endl;
+            bool paisValido = false; 
 
-    int opcion_continente;
-    cout << "Seleccione un continente (1-6): ";
-    cin >> opcion_continente;
+            while (!paisValido) {
+                cout << "Lista de continentes disponibles:" << endl;
+                cout << "1. America del Norte" << endl;
+                cout << "2. America del Sur" << endl;
+                cout << "3. Europa" << endl;
+                cout << "4. Africa" << endl;
+                cout << "5. Asia" << endl;
+                cout << "6. Oceania" << endl;
 
-    int opcion_pais;
+                int opcion_continente;
+                cout << "Seleccione un continente (1-6): ";
+                cin >> opcion_continente;
 
-    switch (opcion_continente) {
-        case 1: // América del Norte
-            cout <<endl<< "Lista de paises disponibles en America del Norte:" << endl;
-            cout << "1. Alaska" << endl;
-            cout << "2. Alberta" << endl;
-            cout << "3. America Central" << endl;
-            cout << "4. Estados unidos Orientales" << endl;
-            cout << "5. Groeenlandia" << endl;
-            cout << "6. Territorio Noroccidental" << endl;
-            cout << "7. Ontario" << endl;
-            cout << "8. Quebec" << endl;
-            cout << "9. Estados Unidos Occidentales" << endl;
+                int opcion_pais;
 
-            cout << "Seleccione un pais (1-9): ";
-            cin >> opcion_pais;
-
-            // Validar la opción del país y asignar el nombre a pais_seleccionado
-            if (opcion_pais >= 1 && opcion_pais <= 9) {
-               pais_seleccionado = paisesAmericaDelNorte[opcion_pais - 1]; // Asigna el nombre real del país
-                    continente_seleccionado = "America del Norte"; // Asigna el continente seleccionado
-                } else {
-                cout << "Opcion de pais no valida." << endl;
-                    while (true) {
-                        cout << "Seleccione un pais (1-9): ";
-                        cin >> opcion_pais;
-
-                        if (opcion_pais >= 1 && opcion_pais <= 9) {
-                            pais_seleccionado = paisesAmericaDelNorte[opcion_pais - 1];
-                            continente_seleccionado = "America del Norte";
-                            paisValido = true;
-                            break; // Sale del ciclo interno cuando se ingresa un dato válido
-                        } else {
-                            cout << "Opcion de pais no valida." << endl;
-                            
+                switch (opcion_continente) {
+                    case 1: 
+                        cout << "Lista de paises disponibles en America del Norte:" << endl;
+                        for (int i = 0; i < paisesAmericaDelNorte.size(); i++) {
+                            cout << i + 1 << ". " << paisesAmericaDelNorte[i] << endl;
                         }
-                    }
-            }
-        
-            break;
-
-        case 2: // América del Sur
-            cout <<endl<< "Lista de paises disponibles en America del Sur:" << endl;
-            cout << "1. Argentina" << endl;
-            cout << "2. Brasil" << endl;
-            cout << "3. Peru" << endl;
-            cout << "4. Venezuela" << endl;
-
-            cout << "Seleccione un pais (1-4): ";
-            cin >> opcion_pais;
-
-            // Validar la opción del país y asignar el nombre a pais_seleccionado
-            if (opcion_pais >= 1 && opcion_pais <= 4) {
-                    pais_seleccionado = paisesAmericaDelSur[opcion_pais - 1]; // Asigna el nombre real del país
-                    continente_seleccionado = "America del Sur"; // Asigna el continente seleccionado
-                } else {
-                cout << "Opcion de pais no valida." << endl;
-                while (true) {
-                        cout << "Seleccione un pais (1-4): ";
-                        cin >> opcion_pais;
-
-                        if (opcion_pais >= 1 && opcion_pais <= 4) {
-                            pais_seleccionado = paisesAmericaDelSur[opcion_pais - 1];
-                            continente_seleccionado = "America del Sur";
-                            paisValido = true;
-                            break;
-                        } else {
-                            cout << "Opcion de pais no valida." << endl;
+                        break;
+                    case 2: 
+                        cout << "Lista de paises disponibles en America del Sur:" << endl;
+                        for (int i = 0; i < paisesAmericaDelSur.size(); i++) {
+                            cout << i + 1 << ". " << paisesAmericaDelSur[i] << endl;
                         }
-                    }
+                        break;
+                    case 3: 
+                        cout << "Lista de paises disponibles en Europa:" << endl;
+                        for (int i = 0; i < paisesEuropa.size(); i++) {
+                            cout << i + 1 << ". " << paisesEuropa[i] << endl;
+                        }
+                        break;
+                    case 4: 
+                        cout << "Lista de paises disponibles en Africa:" << endl;
+                        for (int i = 0; i < paisesAfrica.size(); i++) {
+                            cout << i + 1 << ". " << paisesAfrica[i] << endl;
+                        }
+                        break;
+                    case 5: 
+                        cout << "Lista de paises disponibles en Asia:" << endl;
+                        for (int i = 0; i < paisesAsia.size(); i++) {
+                            cout << i + 1 << ". " << paisesAsia[i] << endl;
+                        }
+                        break;
+                    case 6: 
+                        cout << "Lista de paises disponibles en Oceania:" << endl;
+                        for (int i = 0; i < paisesAustralia.size(); i++) {
+                            cout << i + 1 << ". " << paisesAustralia[i] << endl;
+                        }
+                        break;
+                    default:
+                        cout << "Opcion de continente no valida." << endl;
+                        break;
                 }
-        
-            break;
 
-        case 3: //Europa
-            cout <<endl<< "Lista de paises disponibles en Europa:" << endl;
-            cout << "1. Gran Bretania" << endl;
-            cout << "2. Islandia" << endl;
-            cout << "3. Europa del norte" << endl;
-            cout << "4. Escandinavia" << endl;
-            cout << "5. Europa del sur" << endl;
-            cout << "6. Ucrania" << endl;
-            cout << "7. Europa Occidenal" << endl;
+                cout << "Seleccione un pais (1-6";
+                switch (opcion_continente) {
+                    case 1: cout << paisesAmericaDelNorte.size(); break;
+                    case 2: cout << paisesAmericaDelSur.size(); break;
+                    case 3: cout << paisesEuropa.size(); break;
+                    case 4: cout << paisesAfrica.size(); break;
+                    case 5: cout << paisesAsia.size(); break;
+                    case 6: cout << paisesAustralia.size(); break;
+                }
+                cout << "): ";
+                cin >> opcion_pais;
 
-            cout << "Seleccione un pais (1-7): ";
-            cin >> opcion_pais;
-
-            // Validar la opción del país y asignar el nombre a pais_seleccionado
-            if (opcion_pais >= 1 && opcion_pais <= 7) {
-                pais_seleccionado = paisesEuropa[opcion_pais - 1]; // Asigna el nombre real del país
-                    continente_seleccionado = "Europa"; // Asigna el continente seleccionado
-                } else {
-                cout << "Opcion de pais no valida." << endl;
-                while (true) {
-                        cout << "Seleccione un pais (1-7): ";
-                        cin >> opcion_pais;
-
-                        if (opcion_pais >= 1 && opcion_pais <= 7) {
+                switch (opcion_continente) {
+                    case 1: 
+                        if (opcion_pais >= 1 && opcion_pais <= paisesAmericaDelNorte.size()) {
+                            pais_seleccionado = paisesAmericaDelNorte[opcion_pais - 1];
+                            continente_seleccionado = "América del Norte";
+                            paisValido = true;
+                        }
+                        break;
+                    case 2: 
+                        if (opcion_pais >= 1 && opcion_pais <= paisesAmericaDelSur.size()) {
                             pais_seleccionado = paisesAmericaDelSur[opcion_pais - 1];
+                            continente_seleccionado = "América del Sur";
+                            paisValido = true;
+                        }
+                        break;
+                    case 3: 
+                        if (opcion_pais >= 1 && opcion_pais <= paisesEuropa.size()) {
+                            pais_seleccionado = paisesEuropa[opcion_pais - 1];
                             continente_seleccionado = "Europa";
                             paisValido = true;
-                            break;
-                        } else {
-                            cout << "Opcion de pais no valida." << endl;
                         }
-                    }
-                }
-        
-
-            break;
-
-        case 4: // Africa
-            cout <<endl<< "Lista de paises disponibles en Africa:" << endl;
-            cout << "1. Congo" << endl;
-            cout << "2. Africa Oriental" << endl;
-            cout << "3. Egipto" << endl;
-            cout << "4. Madagascar" << endl;
-            cout << "5. Africa del norte" << endl;
-            cout << "6. Africa del Sur" << endl;
-
-            cout << "Seleccione un pais (1-6): ";
-            cin >> opcion_pais;
-
-            // Validar la opción del país y asignar el nombre a pais_seleccionado
-            if (opcion_pais >= 1 && opcion_pais <= 6) {
-                pais_seleccionado = paisesAfrica[opcion_pais - 1]; // Asigna el nombre real del país
-                    continente_seleccionado = "Africa"; // Asigna el continente seleccionado
-                } else {
-                cout << "Opcion de pais no valida." << endl;
-                while (true) {
-                        cout << "Seleccione un pais (1-6): ";
-                        cin >> opcion_pais;
-
-                        if (opcion_pais >= 1 && opcion_pais <= 6) {
-                            pais_seleccionado = paisesAmericaDelSur[opcion_pais - 1];
-                            continente_seleccionado = "Africa";
+                        break;
+                    case 4: 
+                        if (opcion_pais >= 1 && opcion_pais <= paisesAfrica.size()) {
+                            pais_seleccionado = paisesAfrica[opcion_pais - 1];
+                            continente_seleccionado = "África";
                             paisValido = true;
-                            break;
-                        } else {
-                            cout << "Opcion de pais no valida." << endl;
                         }
-                    }
-                }
-            
-
-            break;    
-        
-        case 5: // Asia
-            cout <<endl<< "Lista de paises disponibles en Asia:" << endl;
-            cout << "1. Afghanistán" << endl;
-            cout << "2. China" << endl;
-            cout << "3. India" << endl;
-            cout << "4. Irkutsk" << endl;
-            cout << "5. Japon" << endl;
-            cout << "6. Kamchatka" << endl;
-            cout << "7. Medio oriente" << endl;
-            cout << "8. Mongolia" << endl;
-            cout << "9. Siam" << endl;
-            cout << "10. Siberia" << endl;
-            cout << "11. Ural" << endl;
-            cout << "12. Yakutsk" << endl;
-
-            cout << "Seleccione un pais (1-12): ";
-            cin >> opcion_pais;
-
-            // Validar la opción del país y asignar el nombre a pais_seleccionado
-            if (opcion_pais >= 1 && opcion_pais <= 12) {
-                pais_seleccionado = paisesAsia[opcion_pais - 1]; // Asigna el nombre real del país
-                    continente_seleccionado = "Asia"; // Asigna el continente seleccionado
-                } else {
-                cout << "Opcion de pais no valida." << endl;
-                while (true) {
-                        cout << "Seleccione un pais (1-12): ";
-                        cin >> opcion_pais;
-
-                        if (opcion_pais >= 1 && opcion_pais <= 12) {
-                            pais_seleccionado = paisesAmericaDelSur[opcion_pais - 1];
+                        break;
+                    case 5: 
+                        if (opcion_pais >= 1 && opcion_pais <= paisesAsia.size()) {
+                            pais_seleccionado = paisesAsia[opcion_pais - 1];
                             continente_seleccionado = "Asia";
                             paisValido = true;
-                            break;
-                        } else {
-                            cout << "Opcion de pais no valida." << endl;
                         }
-                    }
-                }
-            
-
-            break; 
-
-        case 6: // Australia
-            cout <<endl<< "Lista de paises disponibles en Australia:" << endl;
-            cout << "1. Australia Oriental" << endl;
-            cout << "2. Indonesia" << endl;
-            cout << "3. Nueva Guinea" << endl;
-            cout << "4. Australia Occidental" << endl;
-
-            cout << "Seleccione un pais (1-4): ";
-            cin >> opcion_pais;
-
-            // Validar la opción del país y asignar el nombre a pais_seleccionado
-            if (opcion_pais >= 1 && opcion_pais <= 4) {
-                pais_seleccionado = paisesAustralia[opcion_pais - 1]; // Asigna el nombre real del país
-                    continente_seleccionado = "Australia"; // Asigna el continente seleccionado
-                } else {
-                cout << "Opcion de pais no valida." << endl;
-                while (true) {
-                        cout << "Seleccione un pais (1-4): ";
-                        cin >> opcion_pais;
-
-                        if (opcion_pais >= 1 && opcion_pais <= 4) {
-                            pais_seleccionado = paisesAmericaDelSur[opcion_pais - 1];
-                            continente_seleccionado = "Australia";
+                        break;
+                    case 6: 
+                        if (opcion_pais >= 1 && opcion_pais <= paisesAustralia.size()) {
+                            pais_seleccionado = paisesAustralia[opcion_pais - 1];
+                            continente_seleccionado = "Oceanía";
                             paisValido = true;
-                            break;
-                        } else {
-                            cout << "Opcion de pais no valida." << endl;
                         }
+                        break;
+                    default:
+                        cout << "Opción de país no válida." << endl;
+                        break;
+                }
+            }
+
+            bool paisYaSeleccionado = false;
+            for (const Jugador& otroJugador : jugadores) {
+                for (const Territorio& territorio : otroJugador.territorio) {
+                    if (territorio.nombre == pais_seleccionado) {
+                        paisYaSeleccionado = true;
+                        break;
                     }
                 }
-            
-
-            break; 
-
-        default:
-            cout << "Opcion de continente no valida." << endl;
-            break;
-    }
-
-        //if (!pais_seleccionado.empty()) { (en caso de no verificar)
-
-    // Verificar si el país ya ha sido seleccionado por otro jugador
-        bool paisYaSeleccionado = false;
-        for (const Jugador& otroJugador : jugadores) {
-            for (const Territorio& territorio : otroJugador.territorio) {
-                if (territorio.nombre == pais_seleccionado) {
-                    paisYaSeleccionado = true;
+                if (paisYaSeleccionado) {
+                    cout << "El país <" << pais_seleccionado << "> ya ha sido seleccionado por otro jugador. Elige otro país." << endl;
                     break;
                 }
             }
-            if (paisYaSeleccionado) {
-                cout << "El pais <" << pais_seleccionado << "> ya ha sido seleccionado por otro jugador. Elige otro pais." << endl;
-                break;
-            }
-        }
 
             if (!paisYaSeleccionado) {
-                    paisValido = true; // Marcar que se eligió un país válido
-                    Territorio territorio;
-                    territorio.nombre = pais_seleccionado;// se gurda el pais seleccionado
-                    territorio.jugador = jugador.nombre; // se guarda el territorio en cada Jugador
-                    territorio.id = jugador.territorio.size() + 1; // Asignar un ID único al territorio
-                    territorio.unidades_ejercito = 1; // Asignar una unidad al territorio
-                    
-                    territorio.continente = continente_seleccionado; // Asignar el continente al territorio
+                paisValido = true; 
+                Territorio territorio;
+                territorio.nombre = pais_seleccionado;
+                territorio.jugador = jugador.nombre;
+                territorio.id = territorios.size() + 1;
+                territorio.unidades_ejercito = 1;
+                territorio.continente = continente_seleccionado;
 
+                jugador.territorio.push_back(territorio);
+                territorios.push_back(territorio);
+                jugador.numPiezas--;
 
-                    jugador.territorio.push_back(territorio); // Agregar el territorio al vector del jugador
-                    territorios.push_back(territorio); // Agregar el territorio a la lista global de territorios
-                    jugador.numPiezas--; // Restar una pieza al jugador
+                cout << endl << "<" << jugador.nombre << "> ha seleccionado el territorio <" << pais_seleccionado << "> en el continente <" << continente_seleccionado << ">" << endl;
+                cout << "Piezas restantes de " << jugador.nombre << ": " << jugador.numPiezas << endl;
+                cout << "Pieza asignada a " << territorio.nombre << ", Numero de piezas actual: " << jugador.numPiezas << endl;
 
-                    cout << endl <<"< "<< jugador.nombre << " > ha seleccionado el territorio << " << pais_seleccionado << " >> en el continente << " << continente_seleccionado <<" >>" << endl;
-                    cout << "Piezas restantes de " << jugador.nombre << ": " << jugador.numPiezas << endl;
-                    cout << "Pieza asignada a " << territorio.nombre << ", Numero de piezas actual: "<< jugador.numPiezas << endl;
-
-                    
-
-                // Asignar territorios vecinos solo del mismo continente y otros jugadores
-                for (Territorio& territorio : jugador.territorio) {
-                    for (const Territorio& otroTerritorio : territorios) {
-                        if (otroTerritorio.continente == territorio.continente && otroTerritorio.nombre != territorio.nombre) {
-                            territorio.territorios_vecinos.push_back(otroTerritorio.id);
-                        }
+                for (Territorio& t : territorios) {
+                    if (t.continente == continente_seleccionado && t.nombre != pais_seleccionado) {
+                        territorio.territorios_vecinos.push_back(t.id);
                     }
-            
-                    // Agrega este mensaje de depuración para ver los nombres de los territorios vecinos
-                    cout << "Territorio " << territorio.nombre << " tiene los siguientes vecinos: ";
-                    for (int vecino_id : territorio.territorios_vecinos) {
-                        const Territorio& vecino = territorios[vecino_id - 1];
-                        cout << vecino.nombre << ", ";
-                    }
-                    cout << endl;
                 }
 
-            
-        
-            
-            }   
-    
+                //Agregar el territorio como "enemigo" al otro jugador
+                for (Jugador& otroJugador : jugadores) {
+                    if (otroJugador.id != jugador.id) {
+                        for (Territorio& otroTerritorio : otroJugador.territorio) {
+                            if (otroTerritorio.nombre == pais_seleccionado) {
+                                VecinoEnemigo vecino;
+                                vecino.nombre = territorio.nombre;
+                                vecino.esEnemigo = true;
+                                otroTerritorio.vecinos_enemigos.push_back(vecino);
+                            }
+                        }
+                    }
+                }
+
+                cout << "Territorio " << territorio.nombre << " tiene los siguientes enemigos: ";
+for (const Jugador& otroJugador : jugadores) {
+    if (otroJugador.id != jugador.id) {
+        for (const Territorio& otroTerritorio : otroJugador.territorio) {
+            for (const VecinoEnemigo& vecino : otroTerritorio.vecinos_enemigos) {
+                if (vecino.nombre == territorio.nombre && vecino.esEnemigo) {
+                    if (otroTerritorio.nombre != territorio.nombre) {
+                        cout << otroTerritorio.nombre << ", ";
+                    }
+                }
+            }
+        }
+    }
+}
+                cout << endl;
+            }
+        }
+        territoriosAsignados++;
+        if (territoriosAsignados == 2) {
+            break;
         }
 
-    }
-    territoriosAsignados++;
-    if(territoriosAsignados == 2){
-        break;
-    }
-} while (territoriosAsignados != 2);
+    } while (territoriosAsignados != 2);
 
-    // Informar que la inicialización fue exitosa
-    cout << "El juego se ha inicializado correctamente." << endl;
+    cout << "EL juego se ha inicializado correctamente." << endl;
 
-    //verificar
     return true;
 }
-
-
-
