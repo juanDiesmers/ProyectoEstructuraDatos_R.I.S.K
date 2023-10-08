@@ -320,4 +320,40 @@ void realizarAtaques(std::vector<Jugador>& jugadores, std::vector<Territorio>& t
         }
     }
 
+    //Verificar si el defensor perdio todos sus tropas y el atacante gano el territorio
+    bool defensor_perdio = false;
+    int territorio_objetivo_index = -1;
+
+    for (Jugador& otroJugador : jugadores) {
+        if (otroJugador.id != jugador_actual->id) {
+            for (int i = 0; i < otroJugador.territorio.size(); i++) {
+                if (otroJugador.territorio[i].id == territorio_objetivo && otroJugador.territorio[i].unidades_ejercito == 0) {
+                    defensor_perdio = true;
+                    cout << "El defensor perdio el territorio." << endl;
+                    territorio_objetivo_index = i;
+                    break;
+                }
+            }
+        }
+    }
+    //si el defensor perdio el territorio, este pasa al jugador atacante
+    if (defensor_perdio) {
+        // Agregar el territorio al jugador atacante
+        for (Territorio& territorio : territorios) {
+            if (territorio.id == territorio_objetivo) {
+                territorio.jugador = jugador_actual->nombre;
+                territorio.unidades_ejercito = 0;
+                jugador_actual->territorio.push_back(territorio);
+                break;
+            }
+        }
+
+        // Eliminar el territorio del jugador defensor
+        for (int i = 0; i < jugadores.size(); i++) {
+            if (jugadores[i].id != jugador_actual->id) {
+                jugadores[i].territorio.erase(jugadores[i].territorio.begin() + territorio_objetivo_index);
+                break;
+            }
+        }
+    }
 }
