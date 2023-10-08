@@ -98,7 +98,7 @@ void realizarFortificaciones(std::vector<Jugador>& jugadores, std::vector<Territ
     //Mostrar los territorios del jugador actual
     cout << "Territorios controlados por el jugador con ID " << id_jugador_actual << ":" << endl;
     for (const Territorio& territorio : jugador_actual->territorio) {
-        cout << territorio.nombre << "(Unidades: " << territorio.unidades_ejercito << ")" << endl;
+        cout << "ID" << territorio.id << " "<< territorio.nombre << "(Unidades: " << territorio.unidades_ejercito << ")" << endl;
     }
 
     //Pedir al jugador que seleccione un territorio de origen
@@ -166,9 +166,9 @@ void realizarFortificaciones(std::vector<Jugador>& jugadores, std::vector<Territ
     cout << "Se han movido " << unidades_a_mover << "unidades del territorio " << territorio_origen->nombre << " al territorio " << territorio_destino->nombre << "." << endl;
 }
 
-//funcion para realizar ataques
+// Función para realizar ataques
 void realizarAtaques(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios, int id_jugador_actual) {
-    //obtener el jugador actual 
+    // Obtener el jugador actual
     Jugador* jugador_actual = nullptr;
     for (int i = 0; i < jugadores.size(); i++) {
         if (jugadores[i].id == id_jugador_actual) {
@@ -177,73 +177,84 @@ void realizarAtaques(std::vector<Jugador>& jugadores, std::vector<Territorio>& t
         }
     }
 
+    pausarPantalla();
+    limpiarPantalla();
     cout << "Realizando ataques..." << endl;
 
-    //Mostrar indformacion sobre los territorios del jugador actual
-    cout << "Territorio del jugador " << jugador_actual->id<<":" << endl;
-    for (const Territorio& territorio : jugador_actual->territorio) {
-        cout << "Territorio ID" << territorio.id << ", Nombre " << territorio.nombre << ", Unidades: " << territorio.unidades_ejercito << endl;
-    }
-
-    //Permitir al jugador seleccionar un territorio desde el cual atacar 
+    // Permitir al jugador seleccionar un territorio desde el cual atacar
     int territorio_ataque;
-    cout << "Ingrese el ID del territorio desde el cial desea atacar: ";
+    // Mostrar los territorios del jugador actual
+    cout << "Territorios controlados por el jugador con ID " << id_jugador_actual << ":" << endl;
+    for (const Territorio& territorio : jugador_actual->territorio) {
+        cout << "ID " << territorio.id << " " << territorio.nombre << " (Unidades: " << territorio.unidades_ejercito << ")" << endl;
+    }
+    cout << "Ingrese el ID del territorio desde el cual desea atacar: ";
     cin >> territorio_ataque;
 
-    //Validar que el territorio seleccionado es del jugador y tiene al menos 2 unidades
-    bool terruario_valido = false;
-    for (const Territorio& territorio : jugador_actual->territorio) {
+    // Validar que el territorio seleccionado es del jugador y tiene al menos 2 unidades
+    bool territorio_valido = false;
+    for (Territorio& territorio : jugador_actual->territorio) {
         if (territorio.id == territorio_ataque && territorio.unidades_ejercito >= 2) {
-            terruario_valido = true;
+            territorio_valido = true;
             break;
         }
     }
 
-    if(!terruario_valido){
+    if (!territorio_valido) {
         cout << "El territorio seleccionado no es valido" << endl;
         return;
     }
 
-    //Seleccionar un territorio vecino para atacar 
+    // Seleccionar un territorio vecino para atacar
     int territorio_objetivo;
+    // Mostrar información de los territorios enemigos
+    cout << "Territorios enemigos al jugador " << jugador_actual->nombre << ":" << endl;
+    for (const Jugador& otroJugador : jugadores) {
+        if (otroJugador.id != jugador_actual->id) {
+            cout << "Territorios controlados por el jugador con ID " << otroJugador.id << ":" << endl;
+            for (const Territorio& territorio : otroJugador.territorio) {
+                cout << "Territorio ID " << territorio.id << " - " << territorio.nombre << " (Unidades: " << territorio.unidades_ejercito << ")" << endl;
+            }
+        }
+    }
     cout << "Ingrese el ID del territorio que desea atacar: ";
     cin >> territorio_objetivo;
 
-    //Buscar el territorio objetivo
+    // Buscar el territorio objetivo
     Territorio* territorio_objetivo_ptr = nullptr;
-    for(Territorio& territorio : territorios){
-        if(territorio.id == territorio_objetivo){
+    for (Territorio& territorio : territorios) {
+        if (territorio.id == territorio_objetivo) {
             territorio_objetivo_ptr = &territorio;
             break;
         }
     }
 
-    if(!territorio_objetivo_ptr){
+    if (!territorio_objetivo_ptr) {
         cout << "El territorio seleccionado no es valido" << endl;
         return;
     }
 
-    //Lanzar dados y realizar comparaciones
+    // Lanzar dados y realizar comparaciones
     int dados_ataque = 3;
     int dados_defensa = 2;
 
-    //Lanzar dados de ataque
+    // Lanzar dados de ataque
     vector<int> resultado_ataque;
     for (int i = 0; i < dados_ataque; i++) {
-        int resultado = rand() % 6 + 1; //numero aleatorio entre 1 y 6
+        int resultado = rand() % 6 + 1; // número aleatorio entre 1 y 6
         resultado_ataque.push_back(resultado);
     }
     sort(resultado_ataque.rbegin(), resultado_ataque.rend());
 
-    //Lanzar dados de defensa
+    // Lanzar dados de defensa
     vector<int> resultados_defensa;
     for (int i = 0; i < dados_defensa; i++) {
-        int resultado = rand() % 6 + 1; //numero aleatorio entre 1 y 6
+        int resultado = rand() % 6 + 1; // número aleatorio entre 1 y 6
         resultados_defensa.push_back(resultado);
     }
     sort(resultados_defensa.rbegin(), resultados_defensa.rend());
 
-    //Realizar comparaciones y actualizar unidedes en los territorios
+    // Realizar comparaciones y actualizar unidades en los territorios
     int unidades_perdidas_ataque = 0;
     int unidades_perdidas_defensa = 0;
 
@@ -254,8 +265,22 @@ void realizarAtaques(std::vector<Jugador>& jugadores, std::vector<Territorio>& t
             unidades_perdidas_ataque++;
         }
     }
-    //Actualizar unideades en los territorios segun el resultado del ataque 
-    jugador_actual->territorio[territorio_ataque].unidades_ejercito -= unidades_perdidas_ataque;
-    territorio_objetivo_ptr->unidades_ejercito -= unidades_perdidas_defensa;
+
+    // Actualizar unidades en los territorios según el resultado del ataque
+if (unidades_perdidas_defensa > 0) {
+    territorio_objetivo_ptr->unidades_ejercito -= unidades_perdidas_defensa; // El defensor pierde las unidades correspondientes
+    if (territorio_objetivo_ptr->unidades_ejercito < 1) {
+        territorio_objetivo_ptr->jugador = jugador_actual->nombre; // El territorio es conquistado por el atacante
+        territorio_objetivo_ptr->unidades_ejercito = unidades_perdidas_ataque; // El atacante ocupa el territorio con sus unidades restantes
+    } else {
+        territorio_objetivo_ptr->jugador = jugador_actual->nombre; // El territorio es conquistado por el atacante
+    }
+} else {
+    // El ataque no fue exitoso, el defensor mantiene sus unidades
+    territorio_objetivo_ptr->unidades_ejercito += unidades_perdidas_ataque;
+}
+
     cout << "Ataque realizado exitosamente" << endl;
+    cout << "Unidades perdidas en el ataque: " << unidades_perdidas_ataque << endl;
+    cout << "Unidades perdidas en la defensa: " << unidades_perdidas_defensa << endl;
 }
