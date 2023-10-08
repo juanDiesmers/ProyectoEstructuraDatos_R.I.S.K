@@ -318,7 +318,7 @@ bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& 
                         }
                     }
                 }
-                        cout << "Territorio " << territorio.nombre << " tiene los siguientes enemigos: ";
+                cout << "Territorio " << territorio.nombre << " tiene los siguientes enemigos: ";
                 for (const VecinoEnemigo& vecino : territorio.vecinos_enemigos) {
                     if (vecino.esEnemigo) {
                             cout << vecino.nombre << ", ";
@@ -330,7 +330,7 @@ bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& 
         territoriosAsignados++;
                 
 
-    } while (territoriosAsignados != 10);
+    } while (territoriosAsignados != 2);
     
 
     cout << "El juego se ha inicializado correctamente." << endl;
@@ -396,8 +396,9 @@ void seleccionAleatoriaTerritorios(vector<Jugador>& jugadores, vector<Territorio
                 // Asignar el ID al territorio
                 territorio.id = ++ultimoIdTerritorio;
                 territorio.unidades_ejercito = 1; // Asignar 1 pieza al territorio
-                territorio.continente = continenteAsignado;
+
                 jugador.territorio.push_back(territorio);
+                territorios.push_back(territorio);
                 jugador.numPiezas--;
                 //
                 
