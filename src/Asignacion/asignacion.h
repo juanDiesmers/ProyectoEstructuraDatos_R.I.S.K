@@ -33,5 +33,7 @@ struct Jugador{
 };
 //funciones del componente 1: Configuracion del juego
 bool inicializarJuego(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
+void seleccionAleatoriaTerritorios(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
+void mostrarTerritoriosAsignados(const std::vector<Jugador>& jugadores);
 
 #endif //ASIGNACION_H
