@@ -377,5 +377,6 @@ void realizarAtaques(std::vector<Jugador>& jugadores, std::vector<Territorio>& t
                 break;
             }
         }
+        cout << "El territorio ahora pertenece al jugador con ID " << id_jugador_actual << endl;
     }
 }
