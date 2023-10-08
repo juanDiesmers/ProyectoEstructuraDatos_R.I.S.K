@@ -2,6 +2,7 @@
 #include "risk.h"
 #include "Turno/turno.h"
 #include "Asignacion/asignacion.h"
+#include "Guardado/guardado.h"
 
 using namespace std;
 
@@ -42,7 +43,7 @@ int main(){
             break;
         case 'g':
             if(comando == "guardarPartida" || comando == "gp"){
-                guardarPartida("partida_guardada.txt", jugadores, territorios);
+                llenarArchivo(jugadores, territorios);
             } else if (comando == "guardarPartidaComprimida" || comando == "gpc"){
                 guardarPartidaComprimida("partida_comprimida", jugadores, territorios);
             } 
