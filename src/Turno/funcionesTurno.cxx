@@ -87,7 +87,7 @@ void obtenerNuevasUnidades(std::vector<Jugador>& jugadores, int id_jugador_actua
 } 
 //funcion para realizar fortificaciones
 void realizarFortificaciones(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios, int id_jugador_actual) {
-    //Buscar al jugador actual en el vector de jugadores
+    //Buscar el jugador actual en el vector de jugadores
     Jugador* jugador_actual = nullptr;
     for (int i = 0; i < jugadores.size(); i++) {
         if (jugadores[i].id == id_jugador_actual) {
@@ -95,75 +95,97 @@ void realizarFortificaciones(std::vector<Jugador>& jugadores, std::vector<Territ
             break;
         }
     }
-    //Mostrar los territorios del jugador actual
+
+    //Mostrar los territorios controlados por el jugador actual
     cout << "Territorios controlados por el jugador con ID " << id_jugador_actual << ":" << endl;
     for (const Territorio& territorio : jugador_actual->territorio) {
-        cout << "ID" << territorio.id << " "<< territorio.nombre << "(Unidades: " << territorio.unidades_ejercito << ")" << endl;
+        cout << "ID " << territorio.id << " " << territorio.nombre << " (Unidades: " << territorio.unidades_ejercito << ")" << endl;
     }
 
-    //Pedir al jugador que seleccione un territorio de origen
     int id_territorio_origen;
-    cout << "Seleccione el ID del territorio de origen: ";
-    cin >> id_territorio_origen;
-
-    //Econtrar el territorio de origen seleccionado
     Territorio* territorio_origen = nullptr;
-    for (int i = 0; i < territorios.size(); i++) {
-        if(territorios[i].id == id_territorio_origen && territorios[i].jugador == jugador_actual->nombre){
-            territorio_origen = &territorios[i];
-            break;
+
+    //Utilizar un bucle para validar que el territorio origen es valido
+    while (true) {
+        cout << "Seleccione el ID del territorio de Origen: ";
+        cin >> id_territorio_origen;
+
+        territorio_origen = nullptr; // Reiniciar el puntero
+
+        for (int i = 0; i < territorios.size(); i++) {
+            if (territorios[i].id == id_territorio_origen && territorios[i].jugador == jugador_actual->nombre) {
+                territorio_origen = &territorios[i];
+                break;
+            }
         }
-    }
-    if(!territorio_origen){
-        cout << "El territorio de origen no valido" << endl;
-        return;
+
+        if (territorio_origen) {
+            break; // Salir del bucle si el territorio es válido
+        }
+
+        cout << "El territorio seleccionado no es valido. Por favor, seleccione un territorio valido." << endl;
     }
 
-    //mostrar los territorios adyacentes controlados por el jugador actual
-    cout << "Territorios adyacentes controlados al territorio de origen (" << territorio_origen->nombre << "):" << endl;
+    //Mostrar los territorios adyascente controlados por el jugador actual
+    cout << "Territorios adyascentes controlados por el jugador con ID " << id_jugador_actual << ":" << endl;
     for (int id_territorio_vecino : territorio_origen->territorios_vecinos) {
-        for(const Territorio& t : jugador_actual->territorio){
-            if(id_territorio_vecino == t.id){
-                cout << t.nombre << "(Unidades: " << t.unidades_ejercito << ")" << endl;
+        for (const Territorio& t : jugador_actual->territorio) {
+            if  (id_territorio_vecino == t.id) {
+                cout << t.nombre << "(Unideades:  "<< t.unidades_ejercito<<")"<< endl;
                 break;
             }
         }
     }
 
-    //Pedir al jugador que seleccione un territorio de destino
     int id_territorio_destino;
-    cout << "Seleccione el ID del territorio de destino: ";
-    cin >> id_territorio_destino;
-
-    //Encontrar el territorio de destino seleccionado
     Territorio* territorio_destino = nullptr;
-    for(int i = 0; i < territorios.size(); i++){
-        if(territorios[i].id == id_territorio_destino && territorios[i].jugador == jugador_actual->nombre){
-            territorio_destino = &territorios[i];
+    while (true) {
+        cout << "Seleccione el id del territorio de destino: ";
+        cin >> id_territorio_destino;
+
+        //Encontrar el territorio de destino en el vector de territorios
+        for (int i = 0; i < territorios.size(); i++) {
+            if (territorios[i].id == id_territorio_destino && territorios[i].jugador == jugador_actual->nombre) {
+                territorio_destino = &territorios[i];
+                break;
+            }
+        }
+
+        if (territorio_destino) {
+            break; // Salir del bucle si el territorio es válido
+        }
+
+        cout << "El territorio seleccionado no es valido. Por favor, seleccione un territorio valido." << endl;
+    }
+
+    //Pedir al jugador que ingrese la cantidad de unidades a mover
+    int unidades_a_mover;
+    while (true) {
+        cout << "Ingrese la cantidad de unidades a mover: ";
+        cin >> unidades_a_mover;
+
+        if (unidades_a_mover >= 1 && unidades_a_mover > territorio_origen->unidades_ejercito) {
+            break; // Salir del bucle si la cantidad es válida
+        }
+
+        cout << "La cantidad ingresada no es valida. Por favor, ingrese una cantidad valida." << endl;
+    }
+
+    //Realizar la fortificacion
+    //Actualizar unidades del territorio de origen
+    for (Territorio& territorio : jugador_actual->territorio) {
+        if (territorio.id == id_territorio_origen) {
+            territorio.unidades_ejercito -= unidades_a_mover;
             break;
         }
     }
-    if(!territorio_destino){
-        cout << "El territorio de destino no valido" << endl;
-        return;
+    //Actualizar unidades del territorio de destino
+    for (Territorio& territorio : jugador_actual->territorio) {
+        if (territorio.id == id_territorio_destino) {
+            territorio.unidades_ejercito += unidades_a_mover;
+            break;
+        }
     }
-
-    //Pedir al jugador la cantidad de unidades a mover
-    int unidades_a_mover;
-    cout << "Ingrese la cantidad de unidades a mover: ";
-    cin >> unidades_a_mover;
-
-    //verificar si el movimiento es valido y actualizar las unidades
-    if (unidades_a_mover < 1 || unidades_a_mover >= territorio_origen->unidades_ejercito) {
-        cout << "Movimiento invalido. Debe mover al menos una unidad y no puede mover mas de las que tiene en el territorio de origen." << endl;
-        return;
-    }
-
-    //realizar la fortificacion
-    territorio_origen->unidades_ejercito -= unidades_a_mover;
-    territorio_destino->unidades_ejercito += unidades_a_mover;
-    
-    cout << "Se han movido " << unidades_a_mover << "unidades del territorio " << territorio_origen->nombre << " al territorio " << territorio_destino->nombre << "." << endl;
 }
 
 // Función para realizar ataques
