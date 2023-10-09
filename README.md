@@ -31,7 +31,7 @@ cd nombre_carpeta_contenedora_del_proyecto\ProyectoEstructuraDatos_R.I.S.K\src
 ```
 4. Estando en la carpeta contenedora el `main.cpp` podemos hacer la compilación del proyecto, con el siguiente comando:
 ```sh
-g++ -std=c++11 -o *nombre* main.cpp risk.cxx Turno/turno.cxx Turno/funcionesTurno.cxx asignacion/asignacion.cxx
+g++ -o *nombreArchivo* main.cpp risk.cxx Turno/turno.cxx Turno/funcionesTurno.cxx asignacion/asignacion.cxx Guardar/guardar.cxx Guardar/huffman.cxx
 ```
 g++: Este comando invoca el compilador de C++ (GNU Compiler Collection para C++) para compilar el código fuente.
 -std=c++11: Esta opción le indica al compilador que utilice el estándar de C++11 durante la compilación. C++11 es una versión específica del lenguaje C++ con características y mejoras adicionales.
