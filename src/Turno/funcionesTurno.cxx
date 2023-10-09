@@ -341,7 +341,7 @@ void realizarAtaques(std::vector<Jugador>& jugadores, std::vector<Territorio>& t
     for (Jugador& otroJugador : jugadores) {
         if (otroJugador.id != jugador_actual->id) {
             for (int i = 0; i < otroJugador.territorio.size(); i++) {
-                if (otroJugador.territorio[i].id == territorio_objetivo && otroJugador.territorio[i].unidades_ejercito == 0) {
+                if (otroJugador.territorio[i].id == territorio_objetivo && otroJugador.territorio[i].unidades_ejercito <= 0) {
                     defensor_perdio = true;
                     cout << "El defensor perdio el territorio." << endl;
                     territorio_objetivo_index = i;
