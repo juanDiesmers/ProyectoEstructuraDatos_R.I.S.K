@@ -33,25 +33,6 @@ void pantallaPrincipal() {
     cout << "-----------------------------------------------------------------------------------" << endl;
 }
 
-// Funciones para el componente 2: Almacenamento de partidas
-bool guardarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
-    limpiarPantalla();
-    std::cout << "Ingreso correctamente a la función guardarPartida." << std::endl;
-    return true;
-}
-
-bool guardarPartidaComprimida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
-    limpiarPantalla();
-    std::cout << "Ingreso correctamente a la función guardarPartidaComprimida." << std::endl;
-    return true;
-}
-
-bool inicializarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
-    limpiarPantalla();
-    std::cout << "Ingreso correctamente a la función inicializarPartida." << std::endl;
-    return true;
-}
-
 // Funciones para el componente 3: Estrategia del juego
 bool constoConquista(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios, std::string territorio) {
     limpiarPantalla();

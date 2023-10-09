@@ -1,5 +1,6 @@
 #include "Asignacion/asignacion.h"
 #include "Turno/turno.h"
+#include "Guardar/guardar.h"
 #include "risk.h"
 #include <iostream>
 #include <vector>
@@ -7,8 +8,8 @@
 using namespace std;
 
 // cd src
-// g++ -o juego main.cpp risk.cxx Turno/turno.cxx Turno/funcionesTurno.cxx Asignacion/asignacion.cxx
-// ./juego
+// g++ -o main main.cpp risk.cxx Turno/turno.cxx Turno/funcionesTurno.cxx asignacion/asignacion.cxx Guardar/guardar.cxx
+// ./main
 
 int main() {
   vector<Jugador> jugadores;

@@ -48,6 +48,18 @@ void turnoJugador(vector<Jugador>& jugadores, vector<Territorio>& territorios){
         cout << "Turno del jugador " << jugador_actual.nombre << " terminado" << endl;
         //Cambiar al siguiente jugador en la lista
         indice_jugador_actual = (indice_jugador_actual + 1) % jugadores.size();
+        //preguntar si quiere seguir jugando
+        char seguir_jugando;
+        do{
+            cout << "Desea seguir jugando? (s/n): ";
+            cin >> seguir_jugando;
+            if(seguir_jugando != 's' && seguir_jugando != 'n'){
+                cout << "Entrada invalida. Por favor, ingrese 's' o 'n'" << endl;
+            }
+        }while(seguir_jugando != 's' && seguir_jugando != 'n');
+        if(seguir_jugando == 'n'){
+            break;
+        }
     }while(true);
 }
 void salir() {
