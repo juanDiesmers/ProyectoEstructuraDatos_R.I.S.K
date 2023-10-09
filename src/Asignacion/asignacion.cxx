@@ -396,7 +396,7 @@ void seleccionAleatoriaTerritorios(vector<Jugador>& jugadores, vector<Territorio
                 // Asignar el ID al territorio
                 territorio.id = ++ultimoIdTerritorio;
                 territorio.unidades_ejercito = 1; // Asignar 1 pieza al territorio
-
+                territorio.continente = continenteAsignado;
                 jugador.territorio.push_back(territorio);
                 territorios.push_back(territorio);
                 jugador.numPiezas--;

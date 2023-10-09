@@ -14,6 +14,9 @@ using namespace std;
 
 // Función para guardar la partida en un archivo de texto
 bool guardarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
+    limpiarPantalla();
+    std::cout << "Ingreso correctamente a la función guardarPartida." << std::endl;
+    
     std::ofstream archivo(nombre_archivo);
     
     if (!archivo.is_open()) {
@@ -40,7 +43,7 @@ bool guardarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores,
                 archivo << vecino << " ";
             }
             archivo << "\n";
-            archivo << "  Vecinos Enemigos:\n";
+            archivo << "  Vecinos Enemigos\n";
             for (const VecinoEnemigo& vecinoEnemigo : territorio.vecinos_enemigos) {
                 archivo << "    ID: " << vecinoEnemigo.id << "\n";
                 archivo << "    NombreVecino: " << vecinoEnemigo.nombre << "\n";
@@ -53,8 +56,7 @@ bool guardarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores,
             archivo << tarjeta << " ";
         }
         archivo << "\n\n";
-        archivo <<"-----------------------------------------------------------------------------------------------";
-        archivo << "\n";
+        
     }
 
     archivo.close();
@@ -64,107 +66,114 @@ bool guardarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores,
 
 bool inicializarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
     std::ifstream archivo(nombre_archivo);
-    
+
     if (!archivo.is_open()) {
         std::cout << "No se pudo abrir el archivo." << std::endl;
         return false;
     }
 
-    std::string linea;
-    std::string jugador_del_ultimo_territorio;
+    Jugador jugador;
+    Territorio territorio;
+    VecinoEnemigo vecinoEnemigo;
 
+    std::string linea;
     while (std::getline(archivo, linea)) {
-        if (linea == "JUGADOR" || linea == "-----------------------------------------------------------------------------------------------") {
-            Jugador jugador;
-            while (std::getline(archivo, linea) && !linea.empty()) {
-                std::istringstream iss(linea);
-                std::string campo, valor;
-                iss >> campo >> valor;
-                if (campo == "ID:") {
-                    if (valor.empty()) {
-                        std::cerr << "Error: ID de jugador vacío." << std::endl;
-                        return false;
-                    }
-                    jugador.id = std::stoi(valor);
-                } else if (campo == "Nombre:") {
-                    jugador.nombre = valor;
-                } else if (campo == "Número" && valor == "de" && iss >> campo >> valor) {
-                    if (valor.empty()) {
-                        std::cerr << "Error: Número de piezas de jugador vacío." << std::endl;
-                        return false;
-                    }
-                    jugador.numPiezas = std::stoi(valor);
-                } else if (campo == "Color:") {
-                    jugador.color = valor;
-                } else if (campo == "Territorios") {
-                    jugador_del_ultimo_territorio = jugador.nombre;
-                } else if (campo == "ID:") {
-                    Territorio territorio;
-                    territorio.jugador = jugador_del_ultimo_territorio;
-                    if (valor.empty()) {
-                        std::cerr << "Error: ID de territorio vacío." << std::endl;
-                        return false;
-                    }
-                    territorio.id = std::stoi(valor);
-                    while (std::getline(archivo, linea) && !linea.empty()) {
-                        std::istringstream iss_territorio(linea);
-                        iss_territorio >> campo >> valor;
-                        if (campo == "Nombre:") {
-                            territorio.nombre = valor;
-                        } else if (campo == "PerteneceJugador:") {
-                            territorio.jugador = valor;
-                        } else if (campo == "Unidades" && valor == "de" && iss_territorio >> campo >> valor) {
-                            if (valor.empty()) {
-                                std::cerr << "Error: Número de unidades de territorio vacío." << std::endl;
-                                return false;
-                            }
-                            territorio.unidades_ejercito = std::stoi(valor);
-                        } else if (campo == "Continente:") {
-                            territorio.continente = valor;
-                        } else if (campo == "Territorios" && valor == "Vecinos:") {
-                            while (iss_territorio >> valor) {
-                                if (valor.empty()) {
-                                    std::cerr << "Error: ID de territorio vecino vacío." << std::endl;
-                                    return false;
-                                }
-                                territorio.territorios_vecinos.push_back(std::stoi(valor));
-                            }
-                        } else if (campo == "Vecinos" && valor == "Enemigos:") {
-                            while (std::getline(archivo, linea) && !linea.empty()) {
-                                std::istringstream iss_enemigo(linea);
-                                VecinoEnemigo vecino_enemigo;
-                                iss_enemigo >> campo >> valor;
-                                if (campo == "ID:") {
-                                    if (valor.empty()) {
-                                        std::cerr << "Error: ID de vecino enemigo vacío." << std::endl;
-                                        return false;
-                                    }
-                                    vecino_enemigo.id = std::stoi(valor);
-                                } else if (campo == "NombreVecino:") {
-                                    vecino_enemigo.nombre = valor;
-                                } else if (campo == "Es" && valor == "Enemigo:") {
-                                    iss_enemigo >> valor;  // Leer "true" o "false"
-                                    if (valor.empty() || (valor != "true" && valor != "false")) {
-                                        std::cerr << "Error: Valor de 'Es Enemigo' inválido." << std::endl;
-                                        return false;
-                                    }
-                                    vecino_enemigo.esEnemigo = (valor == "true");
-                                    territorio.vecinos_enemigos.push_back(vecino_enemigo);
-                                }
-                            }
-                        }
-                    }
-                    territorios.push_back(territorio);
-                } else if (campo == "Tarjetas:") {
-                    // Maneja las tarjetas si es necesario
-                }
+    if (linea == "JUGADOR") {
+        // Comenzamos a procesar datos de un nuevo jugador
+        jugador = {};  // Inicializar jugador
+    } else if (linea == "Territorios") {
+        // Comenzamos a procesar datos de territorios
+        territorio = {};  // Inicializar territorio
+    } else {
+        size_t pos = linea.find(":");
+        if (pos != std::string::npos) {
+            std::string etiqueta = linea.substr(0, pos);
+            std::string valor = linea.substr(pos + 2);  // +2 para omitir el ':' y el espacio
+
+            if (etiqueta == "ID") {
+                jugador.id = std::stoi(valor);
+            } else if (etiqueta == "Número de Piezas") {
+                jugador.numPiezas = std::stoi(valor);
+            } else if (etiqueta == "Nombre") {
+                jugador.nombre = valor;
+            } else if (etiqueta == "Color") {
+                jugador.color = valor;
+            } else if (etiqueta == "  ID") {
+                territorio.id = std::stoi(valor);
+            } else if (etiqueta == "  Nombre") {
+                territorio.nombre = valor;
+            } else if (etiqueta == "  PerteneceJugador") {
+                territorio.jugador = valor;
+            } else if (etiqueta == "  Unidades de Ejército") {
+                territorio.unidades_ejercito = std::stoi(valor);
+            } else if (etiqueta == "  Continente") {
+                territorio.continente = valor;
+            } else if (etiqueta == "  Territorios Vecinos") {
+                //territorio.territorios_vecinos = valor;
+            } else if (etiqueta == "  Vecinos Enemigos") {
+                // Comenzamos a procesar datos de vecinos enemigos
+                vecinoEnemigo = {};  // Inicializar vecino enemigo
+            } else if (etiqueta == "    ID") {
+                vecinoEnemigo.id = std::stoi(valor);
+            } else if (etiqueta == "    NombreVecino") {
+                vecinoEnemigo.nombre = valor;
+            } else if (etiqueta == "    Es Enemigo") {
+                vecinoEnemigo.esEnemigo = (valor == "true");
+                territorio.vecinos_enemigos.push_back(vecinoEnemigo);  // Agregar vecino enemigo a territorio
             }
-            jugadores.push_back(jugador);
         }
     }
 
+    // Verificar si se ha completado la lectura de datos de un jugador o territorio
+    if (linea.empty()) {
+        if (!jugador.nombre.empty()) {
+            jugadores.push_back(jugador);
+            jugador = {};  // Reinicializar jugador
+        } else if (!territorio.nombre.empty()) {
+            territorios.push_back(territorio);
+            territorio = {};  // Reinicializar territorio
+        }
+    }
+}
+    // Cerrar el archivo después de leer
     archivo.close();
+    /*
+    // Agregar el jugador a la lista de jugadores (si lo deseas)
+    jugadores.push_back(jugador);
+    // Agregar el territorio a la lista de territorios
+    territorios.push_back(territorio);
+    // Ahora los datos están en la estructura Jugador
+    std::cout << "ID: " << jugador.id << std::endl;
+    std::cout << "Numero de Piezas: " << jugador.numPiezas << std::endl;
+    std::cout << "Nombre: " << jugador.nombre << std::endl;
+    std::cout << "Color: " << jugador.color << std::endl;
+    */
+    mostrarDatos(jugadores, territorios);
+    asignarTerritoriosAJugadores(territorios, jugadores);
     return true;
+}
+
+//aisgnar territorios
+// Función para asignar territorios a jugadores
+void asignarTerritoriosAJugadores(std::vector<Territorio>& territorios, std::vector<Jugador>& jugadores) {
+    for (Territorio& territorio : territorios) {
+        for (Jugador& jugador : jugadores) {
+            if (territorio.jugador == jugador.nombre) {
+                jugador.territorio.push_back(territorio);
+                break; // No es necesario buscar más jugadores
+            }
+        }
+    }
+    /*
+    for (const Jugador& jugador : jugadores) {
+        std::cout << "Jugador: " << jugador.nombre << std::endl;
+        for (const Territorio& territorio : jugador.territorio) {
+            std::cout << "Territorio: " << territorio.nombre << std::endl;
+            // Imprime más información del territorio si es necesario
+        }
+    }
+    */
+
 }
 
 
