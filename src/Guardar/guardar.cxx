@@ -4,8 +4,11 @@
 #include <sstream>
 #include <stdlib.h>
 #include "guardar.h"
+#include "huffman.h"
 #include "../Asignacion/asignacion.h"
 #include "../risk.h"
+
+
 
 using namespace std; 
 
@@ -169,7 +172,19 @@ bool inicializarPartida(std::string nombre_archivo, std::vector<Jugador>& jugado
 
 bool guardarPartidaComprimida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
     limpiarPantalla();
-    std::cout << "Ingreso correctamente a la función guardarPartidaComprimida." << std::endl;
+
+    std::ifstream archivo_entrada("partida_guardada.txt");
+
+    if (!archivo_entrada.is_open()) {
+        std::cout << "No se pudo abrir el archivo." << std::endl;
+        return false;
+    }
+
+    std::string contenido((std::istreambuf_iterator<char>(archivo_entrada)), (std::istreambuf_iterator<char>()));
+    archivo_entrada.close();
+    Huffman huffman;
+    huffman.compress(contenido);
+
     return true;
 }
 
