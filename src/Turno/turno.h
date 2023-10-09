@@ -9,7 +9,7 @@ void turnoJugador(std::vector<Jugador>& jugadores, std::vector<Territorio>& terr
 void salir();
 
 bool validacionJugador(std::vector<Jugador>& jugadores, int id_jugador_actual);
-void obtenerNuevasUnidades(std::vector<Jugador>& jugadores, int id_jugador_actual);
+void obtenerNuevasUnidades(std::vector<Jugador>& jugadores, int id_jugador_actual, std::vector<Territorio>& territorios);
 void realizarAtaques(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios, int id_jugador_actual);
 void realizarFortificaciones(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios, int id_jugador_actual);
 

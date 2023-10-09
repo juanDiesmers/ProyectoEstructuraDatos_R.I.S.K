@@ -1,6 +1,11 @@
+#include <ctime>
+#include <cstdlib>
 #include <iostream>
 #include <limits>
 #include <algorithm>
+#include <random>
+#include <chrono>
+
 
 #include "../Asignacion/asignacion.h"
 #include "../risk.h"
@@ -30,8 +35,8 @@ bool validacionJugador(vector<Jugador>& jugadores, int id_jugador_actual) {
 }
 
 //Funcion para obtener nuevas unidades
-void obtenerNuevasUnidades(std::vector<Jugador>& jugadores, int id_jugador_actual) {
-    //Busacar  al jugador actual en el vector de jugadores
+void obtenerNuevasUnidades(std::vector<Jugador>& jugadores, int id_jugador_actual, std::vector<Territorio>& territorios) {
+    // Buscar al jugador actual en el vector de jugadores
     Jugador* jugador_actual = nullptr;
     for (int i = 0; i < jugadores.size(); i++) {
         if (jugadores[i].id == id_jugador_actual) {
@@ -46,47 +51,34 @@ void obtenerNuevasUnidades(std::vector<Jugador>& jugadores, int id_jugador_actua
     // Calcular la cantidad de unidades adicionales basadas en territorios controlados
     int unidades_por_territorio = territorios_controlados / 3;
 
-    // Verificar si el jugador tiene el control de continentes completos y agregar unidades por continente
-    for (const Territorio& territorio : jugador_actual->territorio) {
-        // Verificar si el jugador controla todos los territorios de un continente
-        bool controla_continente = true;
-        for (int id_territorio_vecino : territorio.territorios_vecinos) {
-            bool territorio_en_continentes = false;
-            for (const Territorio& t : jugador_actual->territorio) {
-                if (id_territorio_vecino == t.id) {
-                    territorio_en_continentes = true;
-                    break;
-                }
-            }
-            if (!territorio_en_continentes) {
-                controla_continente = false;
-                break;
-            }
-        }
-
-        // Si controla el continente, agregar unidades según las reglas
-        if (controla_continente) {
-            if (territorio.id == 1 || territorio.id == 2) {
-                unidades_por_territorio += 2; // América del Sur o Australia
-            } else if (territorio.id == 3) {
-                unidades_por_territorio += 3; // África
-            } else if (territorio.id == 4 || territorio.id == 5) {
-                unidades_por_territorio += 5; // América del Norte o Europa
-            } else if (territorio.id == 6) {
-                unidades_por_territorio += 7; // Asia
-            }
-        }
-    //imprimir la cantidad total de unidades que el jugador puede reclamar
-    cout << "El jugador con ID " << id_jugador_actual << " puede reclamar " << unidades_por_territorio << " unidades" << endl;
-
-    //Actualizar la unidedes del jugador en sus territorios
+    // Asignar tropas adicionales a cada territorio del jugador según el continente
     for (Territorio& territorio : jugador_actual->territorio) {
-        territorio.unidades_ejercito += unidades_por_territorio;
+        int tropas_adicionales = 0; // Inicializar el número de tropas adicionales
+
+        if (territorio.continente == "America del Norte") {
+            tropas_adicionales = 5; // Asignar 5 unidades por territorio en América del Norte
+        } else if (territorio.continente == "America del Sur") {
+            tropas_adicionales = 2; // Asignar 2 unidades por territorio en América del Sur
+        } else if (territorio.continente == "Europa") {
+            tropas_adicionales = 7; // Asignar 7 unidades por territorio en Europa
+        } else if (territorio.continente == "Africa") {
+            tropas_adicionales = 3; // Asignar 3 unidades por territorio en África
+        } else if (territorio.continente == "Asia") {
+            tropas_adicionales = 10; // Asignar 10 unidades por territorio en Asia
+        } else if (territorio.continente == "Australia") {
+            tropas_adicionales = 2; // Asignar 2 unidades por territorio en Australia
+        }
+
+        // Actualizar las tropas del territorio
+        territorio.unidades_ejercito += (tropas_adicionales + unidades_por_territorio);
     }
-    }
-} 
+
+    // Imprimir la cantidad total de unidades que el jugador puede reclamar
+    cout << "El jugador con ID " << id_jugador_actual << " puede reclamar " << unidades_por_territorio << " unidades" << endl;
+}
 //funcion para realizar fortificaciones
 void realizarFortificaciones(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios, int id_jugador_actual) {
+
     //Buscar el jugador actual en el vector de jugadores
     Jugador* jugador_actual = nullptr;
     for (int i = 0; i < jugadores.size(); i++) {
@@ -190,6 +182,7 @@ void realizarFortificaciones(std::vector<Jugador>& jugadores, std::vector<Territ
 
 // Función para realizar ataques
 void realizarAtaques(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios, int id_jugador_actual) {
+    srand(static_cast<unsigned int>(time(nullptr)));
     // Obtener el jugador actual
     Jugador* jugador_actual = nullptr;
     for (int i = 0; i < jugadores.size(); i++) {
@@ -274,7 +267,6 @@ void realizarAtaques(std::vector<Jugador>& jugadores, std::vector<Territorio>& t
         cout << "El territorio seleccionado no es valido. Por favor, seleccione un territorio valido." << endl;
     }
 
-    // Lanzar dados y realizar comparaciones
     int dados_ataque = 3;
     int dados_defensa = 2;
     cout << "Lanzando dados: " << endl;

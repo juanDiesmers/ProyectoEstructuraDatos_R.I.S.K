@@ -40,7 +40,7 @@ void turnoJugador(vector<Jugador>& jugadores, vector<Territorio>& territorios){
         }while(!jugador_valido);
 
         //Realizar acciones del jugador actual (obtener nuevas unidades, atacar, fortificar)
-        obtenerNuevasUnidades(jugadores, id_jugador_actual);
+        obtenerNuevasUnidades(jugadores, id_jugador_actual, territorios);
         realizarAtaques(jugadores, territorios, id_jugador_actual);
         realizarFortificaciones(jugadores, territorios, id_jugador_actual);
 
