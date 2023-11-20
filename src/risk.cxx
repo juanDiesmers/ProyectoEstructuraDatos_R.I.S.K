@@ -33,18 +33,6 @@ void pantallaPrincipal() {
     cout << "-----------------------------------------------------------------------------------" << endl;
 }
 
-// Funciones para el componente 3: Estrategia del juego
-bool constoConquista(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios, std::string territorio) {
-    limpiarPantalla();
-    std::cout << "Ingreso correctamente a la función constoConquista." << std::endl;
-    return true;
-}
-
-bool conquistaMasBarata(std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
-    limpiarPantalla();
-    std::cout << "Ingreso correctamente a la función conquistaMasBarata." << std::endl;
-    return true;
-}
 
 
 // Declaración de la función de ayuda

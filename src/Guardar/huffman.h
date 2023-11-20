@@ -33,10 +33,21 @@ public:
     bool isLeaf(Node* node);
     Node* getNode(char ch, int freq, Node* left, Node* right);
 
+    //funciones para guardar y leer la estructura del árbol
+    void guardarArbolHuffman(Node* root, const std::string& nombre_archivo);
+    void setRoot(Node* newRoot) { root = newRoot;}
+    void decode(Node* root, int& index, string str);
+
+    void inicializar(const std::string& nombre_archivo);
+    Node* cargarArbolHuffman(const std::string& nombre_archivo);
+    Node* getRoot() { return root; } // Agregar una función para obtener la raíz
+
 private:
     Node* buildHuffmanTree(const std::string& text);
     void encode(Node* root, string str, unordered_map<char, string>& huffmanCode);
-    void decode(Node* root, int& index, string str);
+    
+    void guardarArbolEnArchivo(Node* root, std::ofstream& archivo);
+    Node* cargarArbolDesdeArchivo(std::ifstream& archivo);
 
     Node* root; // Raíz del árbol Huffman
 };

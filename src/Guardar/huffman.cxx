@@ -3,12 +3,104 @@
 #include <fstream>
 #include <string>
 #include <queue>
+#include<bitset>
 #include <unordered_map>
 using namespace std;
 
 #define EMPTY_STRING ""
 
 // Implementación de las funciones de la clase Huffman
+
+ // Función para guardar el árbol de Huffman en un archivo binario
+    void Huffman::guardarArbolHuffman(Node* root, const std::string& nombre_archivo) {
+        std::ofstream archivo(nombre_archivo, std::ios::binary);
+
+        if (!archivo.is_open()) {
+            std::cout << "Error al abrir el archivo." << std::endl;
+            return;
+        }
+
+        guardarArbolEnArchivo(root, archivo);
+        archivo.close();
+    }
+
+// Función recursiva para guardar la estructura del árbol en el archivo
+    void Huffman::guardarArbolEnArchivo(Node* root, std::ofstream& archivo) {
+        if (root == nullptr) {
+            archivo << '0'; // Indicador de nodo nulo
+            return;
+        }
+
+        archivo << '1'; // Indicador de nodo válido
+        archivo.write(reinterpret_cast<char*>(&root->ch), sizeof(root->ch));
+        archivo.write(reinterpret_cast<char*>(&root->freq), sizeof(root->freq));
+
+        guardarArbolEnArchivo(root->left, archivo);
+        guardarArbolEnArchivo(root->right, archivo);
+    }
+
+
+
+
+
+
+
+// Función para cargar el árbol de Huffman desde un archivo binario
+    Node* Huffman::cargarArbolHuffman(const std::string& nombre_archivo) {
+        std::ifstream archivo(nombre_archivo, std::ios::binary);
+        if (!archivo.is_open()) {
+            std::cout << "Error al abrir el archivo." << std::endl;
+            return nullptr;
+        }
+
+        char indicator;
+        archivo >> indicator;
+
+        Node* root = nullptr;
+        if (indicator == '1') {
+            char ch;
+            int freq;
+            archivo.read(reinterpret_cast<char*>(&ch), sizeof(ch));
+            archivo.read(reinterpret_cast<char*>(&freq), sizeof(freq));
+
+            root = new Node();
+            root->ch = ch;
+            root->freq = freq;
+            root->left = cargarArbolDesdeArchivo(archivo);
+            root->right = cargarArbolDesdeArchivo(archivo);
+        }
+
+        archivo.close();
+        return root;
+    }
+
+    // Función recursiva para cargar la estructura del árbol desde el archivo
+    Node* Huffman::cargarArbolDesdeArchivo(std::ifstream& archivo) {
+        char indicator;
+        archivo >> indicator;
+
+        if (indicator == '0') {
+            return nullptr;
+        }
+
+        char ch;
+        int freq;
+        archivo.read(reinterpret_cast<char*>(&ch), sizeof(ch));
+        archivo.read(reinterpret_cast<char*>(&freq), sizeof(freq));
+
+        Node* root = new Node();
+        root->ch = ch;
+        root->freq = freq;
+        root->left = cargarArbolDesdeArchivo(archivo);
+        root->right = cargarArbolDesdeArchivo(archivo);
+
+        return root;
+    }
+
+
+
+
+
 // Constructor de Huffman
 Huffman::Huffman() {
     root = nullptr;
@@ -40,7 +132,7 @@ void Huffman::encode(Node* root, string str, unordered_map<char, string>& huffma
     encode(root->right, str + "1", huffmanCode);
 }
 
-// Traverse the Huffman Tree and decode the encoded string
+// Traverse the Huffman Tree and decodificacion the encoded string
 void Huffman::decode(Node* root, int& index, string str) {
     if (root == nullptr) {
         return;
@@ -71,95 +163,130 @@ Node* Huffman::getNode(char ch, int freq, Node* left, Node* right) {
     return node;
 }
 
-// Builds Huffman Tree and decodes the given input text
-Node* Huffman::buildHuffmanTree(const std::string& text)
-{
-	// base case: empty string
-	if (text == EMPTY_STRING) {
-		return nullptr;
-	}
+// Construye el árbol de Huffman y decodifica el texto de entrada dado
+Node* Huffman::buildHuffmanTree(const std::string& text) {
 
-	// count the frequency of appearance of each character
-	// and store it in a map
-	unordered_map<char, int> freq;
-	for (char ch: text) {
-		freq[ch]++;
-	}
-
-	// Create a priority queue to store live nodes of the Huffman tree
-	priority_queue<Node*, vector<Node*>, comp> pq;
-
-	// Create a leaf node for each character and add it
-	// to the priority queue.
-	for (auto pair: freq) {
-		pq.push(getNode(pair.first, pair.second, nullptr, nullptr));
-	}
-
-	// do till there is more than one node in the queue
-	while (pq.size() != 1)
-	{
-		// Remove the two nodes of the highest priority
-		// (the lowest frequency) from the queue
-
-		Node* left = pq.top(); pq.pop();
-		Node* right = pq.top();	pq.pop();
-
-		// create a new internal node with these two nodes as children and
-		// with a frequency equal to the sum of the two nodes' frequencies.
-		// Add the new node to the priority queue.
-
-		int sum = left->freq + right->freq;
-		pq.push(getNode('\0', sum, left, right));
-	}
-
-	// `root` stores pointer to the root of Huffman Tree
-	Node* root = pq.top();
-
-	// Traverse the Huffman Tree and store Huffman Codes
-	// in a map. Also, print them
-	unordered_map<char, string> huffmanCode;
-	encode(root, EMPTY_STRING, huffmanCode);
-
-	cout << "Huffman Codes are:\n" << endl;
-	for (auto pair: huffmanCode) {
-		cout << pair.first << " " << pair.second << endl;
-	}
-
-	cout << "\nThe original string is:\n" << text << endl;
-
-	// Print encoded string
-	string str;
-	for (char ch: text) {
-		str += huffmanCode[ch];
-	}
-    //Guardar el texto codificado en un archivo
-    std::ofstream archivo_salida("archivo_comprimido.txt");
-    if (!archivo_salida.is_open()) {
-        std::cout << "No se pudo abrir el archivo de salida" << std::endl;
-        return 0;
+    // Caso base: cadena vacía
+    if (text == EMPTY_STRING) {
+        return nullptr;
     }
 
-    archivo_salida << str;
-    archivo_salida.close();
+    // Contar la frecuencia de aparición de cada carácter
+    // y almacenarla en un mapa
+    std::unordered_map<char, int> freq;
+    for (char ch: text) {
+        freq[ch]++;
+    }
 
-	cout << "\nThe encoded string is:\n" << str << endl;
-	cout << "\nThe decoded string is:\n";
+    // Crear una cola de prioridad para almacenar los nodos del árbol de Huffman
+    std::priority_queue<Node*, std::vector<Node*>, comp> pq;
 
-	if (isLeaf(root))
-	{
-		// Special case: For input like a, aa, aaa, etc.
-		while (root->freq--) {
-			cout << root->ch;
-		}
-	}
-	else {
-		// Traverse the Huffman Tree again and this time,
-		// decode the encoded string
-		int index = -1;
-		while (index < (int)str.size() - 1) {
-			decode(root, index, str);
-		}
-	}
+    // Crear un nodo hoja para cada carácter y añadirlo
+    // a la cola de prioridad.
+    for (auto pair: freq) {
+        pq.push(getNode(pair.first, pair.second, nullptr, nullptr));
+    }
 
+    // Hacer mientras haya más de un nodo en la cola
+    while (pq.size() != 1) {
+        Node* left = pq.top(); pq.pop();
+        Node* right = pq.top(); pq.pop();
+        int sum = left->freq + right->freq;
+        pq.push(getNode('\0', sum, left, right));
+    }
+
+    // `root` almacena un puntero a la raíz del árbol de Huffman
+    Node* root = pq.top();
+
+    // Recorrer el árbol de Huffman y almacenar los códigos Huffman
+    // en un mapa. Además, mostrarlos
+    std::unordered_map<char, std::string> huffmanCode;
+    encode(root, EMPTY_STRING, huffmanCode);
+
+    std::cout << "Los códigos Huffman son:\n" << std::endl;
+    for (auto pair: huffmanCode) {
+        std::cout << pair.first << " " << pair.second << std::endl;
+    }
+
+    std::cout << "\nLa cadena original es:\n" << text << std::endl;
+
+    // Imprimir la cadena codificada
+    std::string str;
+    for (char ch: text) {
+        str += huffmanCode[ch];
+    }
+
+    // Guardar la cadena codificada en un archivo binario
+    std::ofstream outputFile("partida_comprimido.bin", std::ios::binary);
+    if (!outputFile.is_open()) {
+        std::cout << "No se pudo abrir el archivo de salida" << std::endl;
+        return nullptr;
+    }
+
+    std::bitset<8> buffer;
+    int bitIndex = 0;
+    for (char bit : str) {
+        if (bit == '1') {
+            buffer.set(7 - bitIndex);
+        }
+
+        bitIndex++;
+        if (bitIndex == 8) {
+            outputFile << static_cast<unsigned char>(buffer.to_ulong());
+            buffer.reset();
+            bitIndex = 0;
+        }
+    }
+
+    // Escribir el último byte si hay bits restantes en el buffer
+    if (bitIndex > 0) {
+        outputFile << static_cast<unsigned char>(buffer.to_ulong());
+    }
+
+    outputFile.close();
+
+    std::cout << "\nLa cadena codificada es:\n" << str << std::endl;
+    std::cout << "\nLa cadena decodificada es:\n";
+
+    if (isLeaf(root)) {
+        // Caso especial: para entradas como a, aa, aaa, etc.
+        while (root->freq--) {
+            std::cout << root->ch;
+        }
+    } else {
+        // Recorrer el árbol de Huffman nuevamente y esta vez,
+        // decodificar la cadena codificada
+        int index = -1;
+        while (index < (int)str.size() - 1) {
+            decode(root, index, str);
+        }
+    }
+    
     return root;
 }
+    // Función para decodificar la información del archivo comprimido usando el árbol existente
+    void Huffman::inicializar(const std::string& nombre_archivo) {
+        // Lectura del archivo comprimido
+        std::ifstream inputFile(nombre_archivo, std::ios::binary);
+        if (!inputFile.is_open()) {
+            std::cout << "No se pudo abrir el archivo comprimido." << std::endl;
+            return;
+        }
+
+        // Leer el contenido del archivo comprimido en una cadena
+        std::string str((std::istreambuf_iterator<char>(inputFile)), std::istreambuf_iterator<char>());
+        inputFile.close();
+
+        // Decodificar la información del archivo comprimido usando el árbol existente
+        std::cout << "\nLa informacion decodificada es:\n";
+        if (isLeaf(root)) {
+            while (root->freq--) {
+                std::cout << root->ch;
+            }
+        } else {
+            int index = -1;
+            while (index < (int)str.size() - 1) {
+                decode(root, index, str);
+            }
+        }
+    }

@@ -12,6 +12,8 @@
 
 //funcion para el componente 2: Almacenamento de partidas
 bool inicializarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
+bool inicializarPartidaComprimida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
+
 bool guardarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
 bool guardarPartidaComprimida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios);
 void asignarTerritoriosAJugadores(std::vector<Territorio>& territorios, std::vector<Jugador>& jugadores);

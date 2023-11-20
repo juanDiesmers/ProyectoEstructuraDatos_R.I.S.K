@@ -1,6 +1,7 @@
 #include "Asignacion/asignacion.h"
 #include "Turno/turno.h"
 #include "Guardar/guardar.h"
+#include "Conquista/conquista.h"
 #include "risk.h"
 #include <iostream>
 #include <vector>
@@ -8,8 +9,8 @@
 using namespace std;
 
 // cd src
-// g++ -o main main.cpp risk.cxx Turno/turno.cxx Turno/funcionesTurno.cxx asignacion/asignacion.cxx Guardar/guardar.cxx
-// ./main
+// g++ -std=c++11 -o juego main.cpp risk.cxx Turno/turno.cxx Turno/funcionesTurno.cxx asignacion/asignacion.cxx Guardar/guardar.cxx Guardar/huffman.cxx Conquista/conquista.cxx
+// ./juego
 
 int main() {
   vector<Jugador> jugadores;
@@ -31,7 +32,21 @@ int main() {
       if (comando == "inicializarJuego" || comando == "i") {
         inicializarJuego(jugadores, territorios);
       } else if (comando == "inicializarPartida" || comando == "ip") {
-        inicializarPartida("partida_guardada.txt", jugadores, territorios);
+        int opcion;
+        std::cout << "1. inicializacion por archivo de texto" << std::endl;
+        std::cout << "2. inicializacion por archivo comprimido" << std::endl;
+        std::cout << "Ingrese un numero del 1 al 2: ";
+        std::cin >> opcion;
+        switch (opcion) {
+           case 1:
+            std::cout << "Ha ingresado a inicializacion por archivo de texto" << std::endl;
+             inicializarPartida("partida_guardada.txt", jugadores, territorios);
+            break;
+            case 2:
+            std::cout << "Ha ingresado a inicializacion por archivo comprimido" << std::endl;
+             inicializarPartida("partida_guardada.txt", jugadores, territorios);
+            break;
+        }
       }
       break;
     case 't':

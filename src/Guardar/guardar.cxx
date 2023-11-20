@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <stdlib.h>
+#include <cstdio> // Para remove()
 #include "guardar.h"
 #include "huffman.h"
 #include "../Asignacion/asignacion.h"
@@ -15,7 +16,7 @@ using namespace std;
 // Función para guardar la partida en un archivo de texto
 bool guardarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
     limpiarPantalla();
-    std::cout << "Ingreso correctamente a la función guardarPartida." << std::endl;
+    std::cout << "Ingreso correctamente a la funcion guardarPartida." << std::endl;
     
     std::ofstream archivo(nombre_archivo);
     
@@ -36,7 +37,7 @@ bool guardarPartida(std::string nombre_archivo, std::vector<Jugador>& jugadores,
             archivo << "  ID: " << territorio.id << "\n";
             archivo << "  Nombre: " << territorio.nombre << "\n";
             archivo << "  PerteneceJugador: " << territorio.jugador << "\n";
-            archivo << "  Unidades de Ejército: " << territorio.unidades_ejercito << "\n";
+            archivo << "  Unidades de Ejercito: " << territorio.unidades_ejercito << "\n";
             archivo << "  Continente: " << territorio.continente << "\n";
             archivo << "  Territorios Vecinos: ";
             for (int vecino : territorio.territorios_vecinos) {
@@ -92,7 +93,7 @@ bool inicializarPartida(std::string nombre_archivo, std::vector<Jugador>& jugado
 
             if (etiqueta == "ID") {
                 jugador.id = std::stoi(valor);
-            } else if (etiqueta == "Número de Piezas") {
+            } else if (etiqueta == "Numero de Piezas") {
                 jugador.numPiezas = std::stoi(valor);
             } else if (etiqueta == "Nombre") {
                 jugador.nombre = valor;
@@ -104,7 +105,7 @@ bool inicializarPartida(std::string nombre_archivo, std::vector<Jugador>& jugado
                 territorio.nombre = valor;
             } else if (etiqueta == "  PerteneceJugador") {
                 territorio.jugador = valor;
-            } else if (etiqueta == "  Unidades de Ejército") {
+            } else if (etiqueta == "  Unidades de Ejercito") {
                 territorio.unidades_ejercito = std::stoi(valor);
             } else if (etiqueta == "  Continente") {
                 territorio.continente = valor;
@@ -181,7 +182,7 @@ void asignarTerritoriosAJugadores(std::vector<Territorio>& territorios, std::vec
 
 bool guardarPartidaComprimida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
     limpiarPantalla();
-
+    guardarPartida("partida_guardada.txt", jugadores, territorios);
     std::ifstream archivo_entrada("partida_guardada.txt");
 
     if (!archivo_entrada.is_open()) {
@@ -189,13 +190,69 @@ bool guardarPartidaComprimida(std::string nombre_archivo, std::vector<Jugador>& 
         return false;
     }
 
+    
+    
     std::string contenido((std::istreambuf_iterator<char>(archivo_entrada)), (std::istreambuf_iterator<char>()));
     archivo_entrada.close();
     Huffman huffman;
     huffman.compress(contenido);
 
+    // Guardar la estructura del árbol
+    huffman.guardarArbolHuffman(huffman.getRoot(), "estructura_arbol.bin");
+
+    // Eliminar el archivo después de la compresión
+    /*
+    if (std::remove("partida_guardada.txt") != 0) {
+        std::cout << "No se pudo eliminar el archivo." << std::endl;
+        return false;
+    }
+    */
     return true;
 }
+
+bool inicializarPartidaComprimida(std::string nombre_archivo, std::vector<Jugador>& jugadores, std::vector<Territorio>& territorios) {
+    Huffman huffman; // Instancia de la clase Huffman
+    
+    Node* arbolCargado = huffman.cargarArbolHuffman("estructura_arbol.bin");
+
+    if (arbolCargado == nullptr) {
+        std::cout << "Error al cargar el árbol desde el archivo." << std::endl;
+        return false;
+    }
+
+    // Cargar y decodificar la información del archivo comprimido
+    std::ifstream inputFile("partida_comprimido.bin", std::ios::binary);
+    if (!inputFile.is_open()) {
+        std::cout << "No se pudo abrir el archivo comprimido." << std::endl;
+        return false;
+    }
+
+    // Leer el contenido del archivo comprimido en una cadena
+    std::string str((std::istreambuf_iterator<char>(inputFile)), std::istreambuf_iterator<char>());
+    inputFile.close();
+
+    std::cout << "\nLa informacion decodificada es:\n";
+    if (huffman.isLeaf(arbolCargado)) {
+        // Caso especial: para entrada como a, aa, aaa, etc.
+        while (arbolCargado->freq--) {
+            std::cout << arbolCargado->ch;
+        }
+    } else {
+        // Recorrer el árbol de Huffman nuevamente y esta vez,
+        // decodificar la cadena codificada
+        int index = -1; // Inicializar el índice
+        while (index < (int)str.size() - 1) {
+            huffman.decode(arbolCargado, index, str);
+        }
+
+        std::cout << "\n"; // Agregar un salto de línea al final
+    }
+
+    return true;
+}
+
+
+
 
 void mostrarDatos(const std::vector<Jugador>& jugadores, const std::vector<Territorio>& territorios) {
     // Mostrar datos de jugadores
@@ -218,7 +275,7 @@ void mostrarDatos(const std::vector<Jugador>& jugadores, const std::vector<Terri
         std::cout << "ID: " << territorio.id << "\n";
         std::cout << "Nombre: " << territorio.nombre << "\n";
         std::cout << "Pertenece al Jugador: " << territorio.jugador << "\n";
-        std::cout << "Unidades de Ejército: " << territorio.unidades_ejercito << "\n";
+        std::cout << "Unidades de Ejercito: " << territorio.unidades_ejercito << "\n";
         std::cout << "Continente: " << territorio.continente << "\n";
         std::cout << "Territorios Vecinos: ";
         for (int vecino : territorio.territorios_vecinos) {
@@ -229,7 +286,7 @@ void mostrarDatos(const std::vector<Jugador>& jugadores, const std::vector<Terri
         for (const VecinoEnemigo& vecinoEnemigo : territorio.vecinos_enemigos) {
             std::cout << "  ID: " << vecinoEnemigo.id << "\n";
             std::cout << "  NombreVecino: " << vecinoEnemigo.nombre << "\n";
-            std::cout << "  Es Enemigo: " << (vecinoEnemigo.esEnemigo ? "Sí" : "No") << "\n";
+            std::cout << "  Es Enemigo: " << (vecinoEnemigo.esEnemigo ? "Si" : "No") << "\n";
         }
         std::cout << "\n";
     }
